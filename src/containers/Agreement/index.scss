@@ -1,0 +1,20 @@
+.agreement{
+  padding: 28px 20px;
+}
+.title{
+  font-size: 32px;
+  color: $main-text-color;
+  position: relative;
+  border-bottom: 2px solid $borderColor;
+  @include lh(44px);
+  @include flex-lay(row, nowrap, flex-start, center);
+  .link {
+    position: absolute;
+    left: 20px;
+    color: $main-text-color;
+  }
+  p{
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}

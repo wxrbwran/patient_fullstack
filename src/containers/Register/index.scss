@@ -1,0 +1,75 @@
+:global{
+  .register{
+    padding: 28px 20px;
+    .am-list-item.am-input-item{
+      padding: 0;
+      margin-bottom: 60px;
+      &:after{
+        left:0;
+      }
+    }
+    .am-list-item .am-input-label.am-input-label-5{
+      font-size: 28px;
+      width: 54px;
+    }
+  }
+}
+.register{
+  font-family: PingFangSC-Regular;
+  font-size: 32px;
+  @include lh(44px);
+  color: #2BB2BA;
+  margin: 0;
+  text-align: right;
+}
+.icon{
+  color: #666;
+  margin-bottom: 68px;
+  position: relative;
+  left: -30px;
+}
+.content{
+  padding: 0 20px;
+  margin-bottom: 116px;
+}
+.title{
+  font-size: 48px;
+  @include lh(48px);
+  color: #666;
+  margin: 0;
+}
+.extra{
+  font-size: 28px;
+  color: #999;
+  line-height: 44px;
+  margin-bottom: 46px;
+  min-height: 88px;
+}
+.text{
+  font-size: 28px;
+  color: #666;
+  @include lh(40px);
+}
+.agree{
+  @include flex-lay(row, nowrap, flex-start, center);
+  font-size: 24px;
+  color: #999;
+  .link{
+    text-decoration: underline;
+    font-weight: 300;
+  }
+}
+.check_img{
+  @include size(24px);
+  margin-right: 10px;
+}
+.view_password{
+  font-size: 28px;
+}
+.btn{
+  width: 570px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto;
+  border-radius: 16px;
+}

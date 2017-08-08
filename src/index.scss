@@ -1,0 +1,57 @@
+
+%save-btn{
+  text-align: center;
+  font-weight: normal;
+  cursor: pointer;
+  color: #fff;
+  border: 0.5px $theme-color solid;
+  background-color: $theme-color;
+}
+%cancel-btn{
+  @extend %save-btn;
+  border-color: transparent;
+  color: #333;
+}
+
+:global{
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 24px;
+    .save-btn,
+    .am-button-primary{
+      @extend %save-btn;
+      &:visited,
+      &:active,
+      &:focus{
+        @extend %save-btn;
+        border-color: lighten($theme-color, 10);
+        color: lighten(#fff, 10);
+      }
+      &.am-button-disabled{
+        color: #bbb;
+      }
+    }
+    .cancel-btn,
+    .am-button-ghost {
+      @extend %cancel-btn;
+      &:visited,
+      &:active,
+      &:focus{
+        @extend %cancel-btn;
+        color: lighten(#333, 10);
+      }
+      &.am-button-disabled{
+        color: #bbb;
+      }
+    }
+  }
+  p, h1, h3{
+    margin: 0;
+    padding: 0;
+  }
+  a{
+    text-decoration: none;
+  }
+}

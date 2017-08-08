@@ -1,0 +1,70 @@
+//-- Font Settings
+// $font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+$font-family: "MicrosoftYaHei", "微软雅黑", "Microsoft YaHei", Arial, sans-serif;
+
+//font
+$f24: 24px;
+$f36: 36px;
+$f48: 48px;
+
+
+//color
+$main-text-color:#666;
+$help-text-color:#999;
+$extra-text-color:#c5c5c5;
+
+$theme-color: #2BB2BA;
+$orange-color: #DB7831;
+$red-color: #DC4E3F;
+
+$bg-color:#f4f4f4;
+$bg-white:#fff;
+
+$borderColor: #f7f7f7;
+$input-color: #e5e5e5;
+$mask-color: rgba(0,0,0,0.4);
+
+$success: #00a854;
+$warning: #f56a00;
+$error: #f04134;
+
+@mixin flex-lay($direction:row, $wrap:nowrap,
+ $main:space-between, $cross:center){
+  display: flex;
+  flex-flow: $direction $wrap;
+  justify-content: $main;
+  align-items: $cross;
+}
+
+@mixin size($width:0px,$height:$width) {
+  width: $width;
+  height: $height;
+}
+@mixin lh($height:34px,$lineHeight:$height) {
+  height: $height;
+  line-height: $lineHeight;
+}
+
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  *zoom: 1;
+}
+
+//
+//@mixin li-style($style:none) {
+//  list-style: $style;
+//}
+//%mr5{
+//  margin-right: 5px;
+//}
+//
+//body{
+//  @extend %mr5;
+//}

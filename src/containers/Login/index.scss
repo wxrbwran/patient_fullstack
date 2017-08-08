@@ -1,0 +1,47 @@
+:global{
+  .login{
+    padding: 28px 20px;
+    .am-list-item.am-input-item{
+      padding: 0;
+      margin-bottom: 60px;
+      &:after{
+        left:0;
+      }
+    }
+    .am-list-item .am-input-label.am-input-label-5{
+      font-size: 28px;
+      width: 54px;
+    }
+    img{
+      @include size(154px, 130px);
+      display: block;
+      margin: 60px auto;
+    }
+  }
+}
+.to_reg{
+  font-family: PingFangSC-Regular;
+  font-size: 32px;
+  @include lh(44px);
+  color: #2BB2BA;
+  margin: 0;
+  text-align: right;
+}
+.text{
+  font-size: 28px;
+  color: #666;
+  &:last-of-type{
+    color: #999;
+    margin-bottom: 60px;
+  }
+}
+.view_password{
+  font-size: 28px;
+}
+.btn{
+  width: 570px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto;
+  border-radius: 16px;
+}
