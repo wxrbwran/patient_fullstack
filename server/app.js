@@ -165,11 +165,10 @@ app.use(function(req, res, next) {
 //     console.log('Worker %d received request', cluster.worker.id);
 // });
 
-app.use('/', require('cors')(), index);
+app.use('/', index);
 app.use('/users', users);
 app.use('/vacation', vacation);
 app.use('/api/patient', require('cors')(), patientApi);
-
 app.use('/api', require('cors')(), api);
 // app.use(rest);
 
