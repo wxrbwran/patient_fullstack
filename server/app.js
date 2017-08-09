@@ -18,7 +18,7 @@ const patientApi = require('./routes/patientApi');
 
 const app = express();
 
-mongoose.Promise = require('bluebird');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://patient:patient@127.0.0.1/patient', {
   useMongoClient: true,
 });
@@ -27,7 +27,7 @@ const con = mongoose.connection;
 con.on('error', console.error.bind(console, '连接数据库失败'));
 con.once('open', () => {
   console.log('已成功连接数据库');
-  //成功连接
+  // 成功连接
 });
 
 // view engine setup
@@ -95,33 +95,35 @@ switch (app.get('env')) {
 }
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(compression({ filter: function(req, res) {
+app.use(compression({ filter(req, res) {
   if (req.headers['x-no-compression']) {
     return false;
   }
   // fallback to standard filter function
   return compression.filter(req, res);
-}}));
+} }));
 
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser(credentials.cookieSecret));
+// app.use(cookieParser(credentials.cookieSecret));
 app.use(session({
-    secret: 'wuxiaoran',
-    key: 'patient', //db_config.module.database,//cookie name
-    name: 'patient',
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }, //1 days
-    resave: false,
-    saveUninitialized: true,
-    store: new MongoSessionStore({
-      db: 'sessions',
-      url: 'mongodb://patient:patient@127.0.0.1/patient',
-    }),
+  secret: 'wuxiaoran',
+  key: 'patient', // db_config.module.database,//cookie name
+  name: 'patient',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 1 days
+    secure: false,
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new MongoSessionStore({
+    db: 'sessions',
+    url: 'mongodb://patient:patient@127.0.0.1/patient',
   }),
-);
+}));
 
 app.use('/', index);
 app.use('/api/patient', require('cors')(), patientApi);
