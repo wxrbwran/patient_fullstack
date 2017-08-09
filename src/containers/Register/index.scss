@@ -24,7 +24,7 @@
 }
 .icon{
   color: #666;
-  margin-bottom: 68px;
+  margin-bottom: 30px;
   position: relative;
   left: -30px;
 }
@@ -35,20 +35,26 @@
 .title{
   font-size: 48px;
   @include lh(48px);
+  text-align: center;
   color: #666;
-  margin: 0;
+  margin-bottom: 50px;
 }
 .extra{
   font-size: 28px;
   color: #999;
   line-height: 44px;
   margin-bottom: 46px;
-  min-height: 88px;
+  height: auto;
 }
 .text{
   font-size: 28px;
   color: #666;
   @include lh(40px);
+}
+.code{
+  height: 42px;
+  line-height: 42px;
+  padding: 0 20px;
 }
 .agree{
   @include flex-lay(row, nowrap, flex-start, center);
