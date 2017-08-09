@@ -3,15 +3,18 @@
  */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Icon, WhiteSpace, InputItem, Button } from 'antd-mobile';
+import { Icon, WhiteSpace, Toast,
+  InputItem, Button } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { createForm } from 'rc-form';
+import { api } from '../../utils/api';
 import changeStateByValue from '../../utils/changeStateByValue';
 import style from './index.scss';
 import uncheck from './img/login_register_rb_n@3x.png';
 import check from './img/login_register_rb_s@3x.png';
 
-
+let timer = null;
+let count = 10;
 class Register extends Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
@@ -19,32 +22,83 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 1,
       phone: null,
+      passwordType: 'password',
+      password: null,
+      code: null,
+      isSend: false,
+      codeText: '获取验证码',
       isAgree: true,
     };
+  }
+  changePasswordType = () => {
+    const { passwordType } = this.state;
+    this.setState({
+      passwordType: passwordType ===
+      'password' ? 'text' : 'password',
+    });
+  }
+  sendCode = () => {
+    const { phone } = this.state;
+    if (!!phone) {
+      this.setState({
+        isSend: true,
+        codeText: '10s',
+      });
+      api.post('validate_code', {
+        phone,
+      })
+        .then(res => console.log(res))
+        .catch(err => Toast.fail(err));
+      timer = setInterval(() => {
+        if (count === 0) {
+          this.setState({
+            isSend: false,
+            codeText: '获取验证码',
+          });
+          count = 10;
+          clearInterval(timer);
+          timer = null;
+        } else {
+          count -= 1;
+          this.setState({
+            codeText: `${count}s`,
+          });
+        }
+      }, 1000);
+    } else {
+      Toast.info('请输入手机号码!');
+    }
   }
   checkAgreement = () => {
     this.setState({
       isAgree: !this.state.isAgree,
     });
   }
+  submitRegister = () => {
+    const { phone, code, password } = this.state;
+    api.post('register', {
+      phone,
+      code,
+      password,
+    })
+    .then((res) => {
+      const { status } = res.data;
+      if (status === 'success') {
+        Toast.success('注册成功!');
+      } else {
+        Toast.fail(res.data.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      Toast.fail(err);
+    });
+  }
   render() {
-    const { step, phone, isAgree } = this.state;
+    const { phone, passwordType, password,
+      code, isSend, codeText, isAgree } = this.state;
     const { getFieldProps } = this.props.form;
-    let extra = null;
-    switch (step) {
-      case 2:
-        extra = (<div>
-          <p>12313123123验证码已发送</p>
-          <p><span>60</span>秒后可重新发送</p>
-        </div>);
-        break;
-      case 1:
-      default:
-        extra = null;
-        break;
-    }
     return (
       <div className="register">
         <Link to="/login">
@@ -56,11 +110,8 @@ class Register extends Component {
         </Link>
         <div className={style.content}>
           <h1 className={style.title}>
-            您的常用手机号码
+            新用户注册
           </h1>
-          <div className={style.extra}>
-            { extra }
-          </div>
           <p className={style.text}>
             电话
           </p>
@@ -72,6 +123,48 @@ class Register extends Component {
               changeStateByValue(this, 'phone', val)}
             value={phone}
           >+86</InputItem>
+          <p className={style.text}>
+            验证码
+          </p>
+          <WhiteSpace />
+          <InputItem
+            {...getFieldProps('code')}
+            type="text"
+            onChange={val =>
+              changeStateByValue(this, 'code', val)}
+            value={code}
+            maxLength={4}
+            extra={
+              (<Button
+                type="primary"
+                size="small"
+                disabled={isSend}
+                className={style.code}
+                onClick={this.sendCode}
+              >
+                {codeText}
+              </Button>)
+            }
+          />
+          <p className={style.text}>
+            密码
+          </p>
+          <WhiteSpace />
+          <InputItem
+            {...getFieldProps('password')}
+            type={passwordType}
+            value={password}
+            onChange={val =>
+              changeStateByValue(this, 'password', val)}
+            extra={
+              (<div
+                className={style.view_password}
+                onClick={this.changePasswordType}
+              >
+                显示密码
+              </div>)
+            }
+          />
           <div
             className={style.agree}
             onClick={this.checkAgreement}
@@ -94,9 +187,9 @@ class Register extends Component {
           className={style.btn}
           type="primary"
           disabled={!phone || !isAgree}
-          onClick={this.submitLogin}
+          onClick={this.submitRegister}
         >
-          发送验证码
+          注册
         </Button>
       </div>
     );

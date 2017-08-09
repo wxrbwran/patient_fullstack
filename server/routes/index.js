@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const cheerio = require('cheerio');
-const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
@@ -11,7 +10,6 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: function(req, file, cb) {
-    console.log(file);
     const fileNameArray = file.originalname.split('.');
     const ext = fileNameArray[fileNameArray.length - 1];
     cb(null, `${file.fieldname}-${Date.now()}.${ext}`);
@@ -21,32 +19,10 @@ const upload = multer({ storage });
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-  const readFileAsync = Promise.promisify(fs.readFile);
-  async function loadHTMLTemplate(path) {
-    console.log(path);
-    try {
-      let content = await readFileAsync(path);
-      return cheerio.load(content);
-
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
-  }
-  let $ = await loadHTMLTemplate(
-    path.resolve(__dirname, '../../public/index.html'));
-  if (!$) {
-    return res.send('');
-  }
-  return res.format({
-    'text/html': function () {
-      res.send($.html());
-    }
+  res.render('index', {
+    title: 'Express',
+    userName: !!req.session ? req.session.userName : null,
   });
-  // res.render('index', {
-  //   title: 'Express',
-  //   userName: !!req.session ? req.session.userName : null,
-  // });
 });
 router.get('/about', function(req, res, next) {
   res.render('about', {

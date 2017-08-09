@@ -64,7 +64,6 @@ class Login extends Component {
     }
   }
   render() {
-    console.log(this.props);
     const { getFieldProps } = this.props.form;
     const { passwordType, phone, password } = this.state;
     return (
