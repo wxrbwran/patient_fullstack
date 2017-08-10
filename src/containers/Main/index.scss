@@ -1,0 +1,26 @@
+.main{
+  height: 100%;
+  @include flex-lay(column, nowrap, space-between, flex-start);
+}
+.content{
+  flex: 1 1 auto;
+  align-self: stretch;
+  overflow: auto;
+  background-color: $bg-color;
+}
+.tab{
+  border-top: 2px solid $borderColor;
+  flex: 0 0 78px;
+  align-self: stretch;
+  padding: 10px 0;
+  @include flex-lay(row, nowrap, space-around, center);
+  img{
+    @include size(auto, 40px);
+    margin-bottom: 15px;
+  }
+  p{
+    font-size: 22px;
+    text-align: center;
+    color: #666;
+  }
+}

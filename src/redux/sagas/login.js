@@ -3,22 +3,19 @@
  */
 import { put, call, takeLatest } from 'redux-saga/effects';
 import loginApi from '../../apis/login';
-
+import { setAuthorizationToken } from '../../utils/api';
 
 function* login(action) {
   try {
-    const { res } = yield call(loginApi, action.payload);
+    const res = yield call(loginApi, action.payload);
+    setAuthorizationToken(res.data.token);
     yield put({ type: 'LOGIN_SUCCESS', payload: res });
   } catch (err) {
     yield put({ type: 'LOGIN_FAIL', payload: err });
-    // return Promise.reject(err);
   }
 }
 
 export default function* watchLogin() {
-  // while (true) {
-  //
-  // }
   yield takeLatest('LOGIN_REQUEST', login);
 }
 

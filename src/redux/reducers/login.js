@@ -15,11 +15,14 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:
+      // console.log(action.payload);
+      // const { data } = action.payload;
       return Object.assign({}, initialState,
         {
           isAuthenticated: true,
           isSuccess: true,
           isFail: false,
+          token: action.payload.data.token,
         });
     case LOGIN_FAIL:
       return Object.assign({}, initialState,

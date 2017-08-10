@@ -1,0 +1,103 @@
+.home{
+}
+.info{
+  @include flex-lay(row, nowrap, space-between, flex-start);
+  padding: 62px 24px;
+  background-color: #fff;
+  > img{
+    @include size(140px);
+    margin: 16px 60px 0 0 ;
+  }
+}
+.detail{
+  h1{
+    color: $theme-color;
+    font-size: 32px;
+    @include lh(64px);
+  }
+  p {
+    @include flex-lay(row, nowrap, flex-start, center);
+    color: $main-text-color;
+    font-size: 30px;
+    @include lh(50px);
+
+    span {
+      margin: 0 10px 0 20px;
+      color: $red-color;
+    }
+  }
+  > div {
+    width: 400px;
+    height: 12px;
+    margin-top: 36px;
+    background-color: $extra-text-color;
+    border-radius: 8px;
+  }
+}
+.actions {
+  height: 210px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 0 24px;
+  ol{
+    border-top: 2px solid $borderColor;
+    height: 208px;
+    @include flex-lay(row, nowrap, space-between, center);
+  }
+}
+.action{
+  flex: 1 1 auto;
+  text-align: center;
+  p{
+    margin-top: 24px;
+    color: $theme-color;
+    font-size: 32px;
+    font-weight: 300;
+  }
+}
+.doctor{
+  background-color: #fff;
+}
+.dtitle{
+  @include flex-lay(row, nowrap, flex-start, center);
+  height: 100px;
+  border-bottom: 2px solid $borderColor;
+  img{
+    margin: 0 20px 0 24px;
+    flex: 0 0 40px;
+    @include size(40px,auto);
+  }
+  h3{
+    font-size: 32px;
+    color: $extra-text-color;
+    font-weight: 300;
+    flex: 1 1 auto;
+  }
+  svg {
+    margin-right: 24px;
+    color: $extra-text-color;
+  }
+}
+.dinfo{
+  height: 118px;
+  @include flex-lay(row, nowrap, flex-start, center);
+  border-bottom: 2px solid $borderColor;
+  img{
+    margin: 0 40px 0 24px;
+    flex: 0 0 90px;
+    @include size(90px,90px);
+  }
+  h2{
+    font-size: 32px;
+    color: $main-text-color;
+    font-weight: 300;
+    margin-right: 32px;
+  }
+  h3{
+    font-size: 32px;
+    color: $extra-text-color;
+    font-weight: 300;
+  }
+}
+
+

@@ -2,27 +2,25 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
-// const cookieParser = require('cookie-parser');
-// const session = require('express-session');
-// const MongoSessionStore = require('connect-mongo')(session);
-
+const session = require('express-session');
 const mongoose = require('mongoose');
+const MongoSessionStore = require('connect-mongo')(session);
 const helmet = require('helmet');
 const csurf = require('csurf');
 
-const credentials = require('./config/credentials.js');
+const config = require('./config');
 const index = require('./routes/index');
 const patientApi = require('./routes/patientApi');
-const code = require('./routes/code');
-
 // const rest = require('./routes/restful-api');
 
 const app = express();
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://patient:patient@127.0.0.1/patient', {
+mongoose.Promise = require('bluebird');
+mongoose.connect(`mongodb://${config.db.user}:${config
+  .db.password}@127.0.0.1/${config.db.name}`, {
   useMongoClient: true,
 });
 
@@ -30,7 +28,7 @@ const con = mongoose.connection;
 con.on('error', console.error.bind(console, '连接数据库失败'));
 con.once('open', () => {
   console.log('已成功连接数据库');
-  // 成功连接
+  //成功连接
 });
 
 // view engine setup
@@ -98,48 +96,42 @@ switch (app.get('env')) {
 }
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(compression({ filter(req, res) {
+app.use(compression({ filter: function(req, res) {
   if (req.headers['x-no-compression']) {
     return false;
   }
-  // fallback to standard filter function
   return compression.filter(req, res);
-} }));
+}}));
 
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser(credentials.cookieSecret));
-// app.use(session({
-//   secret: 'wuxiaoran',
-//   key: 'patient', // db_config.module.database,//cookie name
-//   name: 'patient',
-//   cookie: {
-//     maxAge: 1000 * 60 * 60 * 24, // 1 days
-//     secure: false,
-//   },
-//   resave: false,
-//   saveUninitialized: true,
-//   store: new MongoSessionStore({
-//     db: 'sessions',
-//     url: 'mongodb://patient:patient@127.0.0.1/patient',
-//   }),
-// }));
+app.use(cookieParser(config.cookieSecret));
+app.use(session({
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, //1 days
+    name: 'patient',
+    secret: config.cookieSecret,
+    key: 'patient',
+    // 强制把session写入存储，即使session在整个请求过程中都没有被修改。
+    resave: false,
+    // 保存新建的但没有被改动的session。
+    saveUninitialized: false,
+    store: new MongoSessionStore({
+      db: 'sessions',
+      url: `mongodb://${config.db.user}:${config
+        .db.password}@127.0.0.1/${config.db.name}`,
+    }),
+  }),
+);
 
 app.use('/', index);
 app.use('/api/patient', require('cors')(), patientApi);
-app.use('/api/patient', require('cors')(), code);
 
-// app.use(rest);
-
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  // const err = new Error('Not Found');
   res.status(404);
   res.render('404');
-  // next(err);
 });
 
 // error handler

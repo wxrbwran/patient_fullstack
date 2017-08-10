@@ -7,6 +7,7 @@ import { Icon, WhiteSpace, Toast,
   InputItem, Button } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { createForm } from 'rc-form';
+// import history from 'history';
 import { api } from '../../utils/api';
 import changeStateByValue from '../../utils/changeStateByValue';
 import style from './index.scss';
@@ -18,6 +19,7 @@ let count = 10;
 class Register extends Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
   };
   constructor(props) {
     super(props);
@@ -48,7 +50,9 @@ class Register extends Component {
       api.post('validate_code', {
         phone,
       })
-        .then(res => console.log(res))
+        .then(() => {
+          Toast.success('验证码已发送~');
+        })
         .catch(err => Toast.fail(err));
       timer = setInterval(() => {
         if (count === 0) {
@@ -84,8 +88,10 @@ class Register extends Component {
     })
     .then((res) => {
       const { status } = res.data;
+      const { history } = this.props;
       if (status === 'success') {
         Toast.success('注册成功!');
+        history.push('/login');
       } else {
         Toast.fail(res.data.message);
       }
