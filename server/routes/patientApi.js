@@ -3,42 +3,6 @@ const router = express.Router();
 const ValidateCode = require("../models/validateCode");
 const User = require("../models/user");
 
-router.post('/validate_code', function (req, res) {
-  const { phone } = req.body;
-  if (!!phone) {
-    let code = ~~(Math.random() * (10 ** 4));
-    if (code > 1000) {
-      code = `${code}`.padStart(4, 0);
-    }
-    ValidateCode.update(
-      { phone },
-      {"$set": { code }},
-      {upsert: true},
-      (err, data) => {
-      if (err) {
-        console.log(err);
-        res.json({
-          status: 'fail',
-          message: '数据库错误!'
-        })
-      } else {
-        console.log(data);
-        res.json({
-          status: 'success',
-          data: {
-            code,
-          }
-        })
-      }
-    })
-  } else {
-    res.json({
-      status: 'fail',
-      message: '请输入手机号码!',
-    });
-  }
-});
-
 router.post('/register', function (req, res) {
   const { phone, code, password } = req.body;
   if (!!phone && !!code && !!password) {

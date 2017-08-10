@@ -2,18 +2,21 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
-const session = require('express-session');
+// const cookieParser = require('cookie-parser');
+// const session = require('express-session');
+// const MongoSessionStore = require('connect-mongo')(session);
+
 const mongoose = require('mongoose');
-const MongoSessionStore = require('connect-mongo')(session);
 const helmet = require('helmet');
 const csurf = require('csurf');
 
 const credentials = require('./config/credentials.js');
 const index = require('./routes/index');
 const patientApi = require('./routes/patientApi');
+const code = require('./routes/code');
+
 // const rest = require('./routes/restful-api');
 
 const app = express();
@@ -109,24 +112,26 @@ app.use(compression({ filter(req, res) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser(credentials.cookieSecret));
-app.use(session({
-  secret: 'wuxiaoran',
-  key: 'patient', // db_config.module.database,//cookie name
-  name: 'patient',
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24, // 1 days
-    secure: false,
-  },
-  resave: false,
-  saveUninitialized: true,
-  store: new MongoSessionStore({
-    db: 'sessions',
-    url: 'mongodb://patient:patient@127.0.0.1/patient',
-  }),
-}));
+// app.use(session({
+//   secret: 'wuxiaoran',
+//   key: 'patient', // db_config.module.database,//cookie name
+//   name: 'patient',
+//   cookie: {
+//     maxAge: 1000 * 60 * 60 * 24, // 1 days
+//     secure: false,
+//   },
+//   resave: false,
+//   saveUninitialized: true,
+//   store: new MongoSessionStore({
+//     db: 'sessions',
+//     url: 'mongodb://patient:patient@127.0.0.1/patient',
+//   }),
+// }));
 
 app.use('/', index);
 app.use('/api/patient', require('cors')(), patientApi);
+app.use('/api/patient', require('cors')(), code);
+
 // app.use(rest);
 
 // catch 404 and forward to error handler
