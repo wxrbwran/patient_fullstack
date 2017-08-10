@@ -4,8 +4,8 @@
 import React, { Component } from 'react';
 // import { Icon } from 'antd-mobile';
 import { PropTypes } from 'prop-types';
-import {
-  Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Home from '../../components/Home';
 import Plan from '../../components/Plan';
 import News from '../../components/News';
@@ -33,6 +33,7 @@ class Main extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
   };
   constructor(props) {
     super(props);
@@ -41,11 +42,19 @@ class Main extends Component {
     };
   }
   componentWillMount() {
-    const { location } = this.props;
-    const { tab } = this.state;
-    if (!location.pathname.includes(tab)) {
-      const arr = location.pathname.split('/');
-      this.changeTab(arr[2]);
+    const { location, history, isAuthenticated } = this.props;
+    if (isAuthenticated) {
+      const { tab } = this.state;
+      if (!location.pathname.includes(tab)) {
+        const arr = location.pathname.split('/');
+        if (arr.length < 3) {
+          history.push('/main/home');
+        } else {
+          this.changeTab(arr[2]);
+        }
+      }
+    } else {
+      history.push('/login');
     }
   }
   changeTab = (tab) => {
@@ -62,11 +71,11 @@ class Main extends Component {
     return (
       <div className={style.main}>
         <div className={style.content}>
-          <Route exact path="/main/home" component={Home} />
-          <Route exact path="/main/plan" component={Plan} />
-          <Route exact path="/main/news" component={News} />
-          <Route exact path="/main/health" component={Health} />
-          <Route exact path="/main/me" component={Me} />
+          <Route path="/main/home" component={Home} />
+          <Route path="/main/plan" component={Plan} />
+          <Route path="/main/news" component={News} />
+          <Route path="/main/health" component={Health} />
+          <Route path="/main/me" component={Me} />
         </div>
         <ul className={style.tab}>
           <li onClick={() => this.changeTab('home')}>
@@ -110,4 +119,9 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default connect(
+  state => ({
+    isAuthenticated: state.login.isAuthenticated,
+  }),
+  null,
+)(Main);

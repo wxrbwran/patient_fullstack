@@ -16,10 +16,10 @@ function App() {
           path="/"
           render={() => <Redirect to="/login" />}
         />
+        <Route path="/main" component={Main} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/agreement" component={Agreement} />
-        <Route path="/main" component={Main} />
       </div>
     </Router>
   );
