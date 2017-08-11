@@ -2,11 +2,12 @@
  * Created by wuxiaoran on 2017/8/2.
  */
 
-import { api } from '../utils/api';
+import { authApi } from '../utils/api';
 
 export default function loginApi(params) {
-  return api.post('/login', {
+  return authApi.post('/login', {
     phone: params.phone,
     password: params.password,
+    grant_type: 'password',
   });
 }

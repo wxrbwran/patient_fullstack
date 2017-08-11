@@ -140,7 +140,12 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   console.error(err.stack);
-  if (req.xhr) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send({
+      status: 401,
+      message: 'token has expired',
+    })
+  } else if (req.xhr) {
     res.status(500).send({ error: err.stack });
   } else {
     // render the error page

@@ -15,11 +15,9 @@ class Me extends Component {
     };
   }
   componentDidMount() {
-    api.post('validate_code', {
-      phone: 12222222222,
-    })
-    .then(() => {
-      console.log('验证码已发送~');
+    api.get('user/info')
+    .then((res) => {
+      console.log(res);
     })
     .catch(err => console.log(err));
   }

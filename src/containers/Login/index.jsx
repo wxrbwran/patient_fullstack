@@ -21,7 +21,7 @@ class Login extends Component {
     actions: PropTypes.object.isRequired,
     form: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    token: PropTypes.string,
+    message: PropTypes.string,
   };
   constructor(props) {
     super(props);
@@ -34,12 +34,10 @@ class Login extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isSuccess && nextProps.isAuthenticated) {
       Toast.success('登录成功!', 0.75);
-      const localStorage = window.localStorage;
-      localStorage.setItem('token', nextProps.token);
       const { history } = this.props;
       history.push('/main/home');
     } else if (nextProps.isFail) {
-      Toast.info('登录失败,请检查账号名或密码', 2);
+      Toast.info(`登录失败,${nextProps.message}`, 2);
     }
   }
   changePasswordType = () => {
@@ -121,7 +119,7 @@ export default connect(
     isSuccess: state.login.isSuccess,
     isFail: state.login.isFail,
     isAuthenticated: state.login.isAuthenticated,
-    token: state.login.token,
+    message: state.login.message,
   }),
   dispatch => ({
     actions: bindActionCreators(actions, dispatch),

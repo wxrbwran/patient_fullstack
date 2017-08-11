@@ -108,43 +108,115 @@ router.post('/register', function (req, res) {
   }
 });
 router.post('/login', function (req, res) {
-  // console.log(req.session, req.session.code);
-  const { phone, password } = req.body;
-  if (!!phone && !!password) {
-    User.find({phone, password})
-      .then(user => {
-        if (user.length === 1) {
-          console.log(user);
+  const { grant_type } = req.body;
+  if (grant_type === 'password') {
+    const { phone, password } = req.body;
+    if (!!phone && !!password) {
+      User.find({phone, password})
+        .then(user => {
+          if (user.length === 1) {
+            const token = jsonwebtoken.sign({
+              uid: user[0]['_id'],
+              phone: user[0]['phone'],
+            }, config.token.secret, {
+              expiresIn: config.token.expired
+            });
+            const refresh_token = jsonwebtoken.sign({
+              uid: user[0]['_id'],
+              phone: user[0]['phone'],
+            }, config.token.secret, {
+              expiresIn: config.token.refresh
+            });
+            res.json({
+              status: 'success',
+              token,
+              refresh_token,
+              data: {
+                phone,
+              },
+            });
+          } else {
+            res.json({
+              status: 'fail',
+              message: '用户名或密码错误!',
+            });
+          }
+        })
+        .catch(() => {
+          res.json({
+            status: 'fail',
+            message: '数据库错误!',
+          });
+        })
+    } else {
+      res.json({
+        status: 'fail',
+        message: '请输入登录信息!',
+      });
+    }
+  }
+  else if (grant_type === 'refresh_token') {
+    const refresh_token = req.body.refresh_token;
+    var decoded = jsonwebtoken.verify(refresh_token,
+      config.token.secret);
+    const { uid, exp } = decoded;
+    console.log(exp, Date.now());
+    if (exp * 1000 > Date.now()) {
+      User.findById(uid, function (err, user) {
+        console.log(err, user);
+        if (err) {
+          res.json({
+            status: 'fail',
+            message: '用户不存在!',
+          });
+        } else if (user) {
           const token = jsonwebtoken.sign({
-            uid: user[0]['_id'],
-            phone: user[0]['phone'],
-          }, config.token.secret, { // get secret from config
-            expiresIn: config.token.expired // expires in 1 day
+            uid: user['_id'],
+            phone: user['phone'],
+          }, config.token.secret, {
+            expiresIn: config.token.expired
+          });
+          const refresh_token = jsonwebtoken.sign({
+            uid: user['_id'],
+            phone: user['phone'],
+          }, config.token.secret, {
+            expiresIn: config.token.refresh
           });
           res.json({
             status: 'success',
             token,
-            data: null,
+            refresh_token,
+            data: {
+              phone: user['phone'],
+            },
           });
         } else {
           res.json({
             status: 'fail',
-            message: '用户名或密码错误!',
+            message: '用户不存在!',
           });
         }
       })
-      .catch(() => {
-        res.json({
-          status: 'fail',
-          message: '数据库错误!',
-        });
-      })
-  } else {
-    res.json({
-      status: 'fail',
-      message: '请输入登录信息!',
-    });
+    } else {
+      res.status(405).json({
+        status: 'fail',
+        message: '登录超时!',
+      });
+    }
   }
+
+});
+
+
+router.get('/user/info',
+  jwt({secret: config.token.secret}),
+  function (req, res) {
+    res.json({
+      status: 'success',
+      data: {
+        name: '吉尔伽美什',
+      }
+    });
 });
 
 module.exports = router;

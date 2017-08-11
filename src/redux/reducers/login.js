@@ -10,19 +10,19 @@ const initialState = {
   isAuthenticated: false,
   isSuccess: false,
   isFail: false,
+  phone: null,
+  message: null,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      // console.log(action.payload);
-      // const { data } = action.payload;
       return Object.assign({}, initialState,
         {
           isAuthenticated: true,
           isSuccess: true,
           isFail: false,
-          token: action.payload.data.token,
+          // phone: action.payload.data.phone,
         });
     case LOGIN_FAIL:
       return Object.assign({}, initialState,
@@ -30,6 +30,7 @@ export default function (state = initialState, action) {
           isAuthenticated: false,
           isSuccess: false,
           isFail: true,
+          message: action.payload,
         });
     case LOGIN_REQUEST:
     default:

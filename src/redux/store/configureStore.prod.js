@@ -7,7 +7,7 @@ import rootSaga from '../sagas';
 const sagaMiddleware = createSagaMiddleware();
 const enhancer = compose(
   applyMiddleware(
-    sagaMiddleware
+    sagaMiddleware,
   ),
 );
 

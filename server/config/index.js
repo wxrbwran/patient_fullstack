@@ -10,6 +10,7 @@ module.exports = {
   },
   token: {
     secret: 'patient',
-    expired: '2h'
+    expired: '1h',
+    refresh: '2h'
   },
 };
