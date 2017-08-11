@@ -19,4 +19,5 @@
 
 ### 后端
 使用[express](http://www.expressjs.com.cn/)+mongodb进行后端开发，odm使用[mongoose](http://www.nodeclass.com/api/mongoose.html)
+
 ajax请求采取[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)、[express-jwt](https://github.com/auth0/express-jwt)的方式验证来源的合法性。
