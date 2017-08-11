@@ -3,6 +3,8 @@
  */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { WhiteSpace, WingBlank,
+  Button, Modal } from 'antd-mobile';
 
 class News extends Component {
   static propTypes = {
@@ -11,11 +13,39 @@ class News extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isShowModal: false,
     };
+  }
+  toggleModal = () => {
+    this.setState({
+      isShowModal: !this.state.isShowModal,
+    });
   }
   render() {
     return (
-      <div>建设中</div>
+      <div>
+        <WhiteSpace />
+        <WingBlank>
+          <Button
+            onClick={this.toggleModal}
+          >Modal 对话框 (自动检测平台)</Button>
+        </WingBlank>
+        <WhiteSpace />
+        <Modal
+          title="这是 title"
+          transparent
+          maskClosable
+          visible={this.state.isShowModal}
+          onClose={this.toggleModal}
+          footer={[{
+            text: '确定',
+            onPress: () => { console.log('ok'); this.toggleModal(); },
+          }]}
+        >
+          这是内容...<br />
+          这是内容...<br />
+        </Modal>
+      </div>
     );
   }
 }
