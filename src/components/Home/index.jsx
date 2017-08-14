@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Icon } from 'antd-mobile';
+import RecentPlan from '../RecentPlan';
 import style from './index.scss';
 import head from './img/head@3x.png';
 import plan from './img/plan.png';
@@ -66,8 +67,15 @@ class Home extends Component {
             <h3>主任医师</h3>
           </div>
           <div className={style.dadvice}>
-            33
+            <p>
+              asdhskjadhskjadhksahjdaskjdhsakjdhsajkdhasdasdasdasdasdadsdasdaddasdsaasdasdsadasdasdasd
+              skajhaskdhjaskdaskjdhksadksajdhsadhasdkjhsad
+              sjdaskdjkjsahdkjsadhksajhdkjsahdkasjhdkjhsazzzzzzzzzzz
+            </p>
           </div>
+        </div>
+        <div className={style.latest}>
+          <RecentPlan />
         </div>
       </div>
     );

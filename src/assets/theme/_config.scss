@@ -45,6 +45,14 @@ $error: #f04134;
   line-height: $lineHeight;
 }
 
+@mixin line($num) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all;
+  -webkit-line-clamp: $num;
+}
+
 @mixin clearfix {
   &:before,
   &:after {

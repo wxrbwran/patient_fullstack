@@ -1,5 +1,5 @@
 # 患者端
-> 患者健康提醒h5项目，前端采用react技术栈，后端采用express进行数据的保存修改及查询。
+> 患者健康、服药提醒h5项目，前端采用react技术栈，后端采用express进行数据的保存修改及查询。
 
 - - - 
 
@@ -15,9 +15,11 @@
 - Scss
 - post-css
 
-适配方案采用的antd的antm-viewport。
+css采用**css modules**结合**BEM**方案。
+适配采用的antd的**antm-viewport**方案。
 
 ### 后端
 使用[express](http://www.expressjs.com.cn/)+mongodb进行后端开发，odm使用[mongoose](http://www.nodeclass.com/api/mongoose.html)
 
 ajax请求采取[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)、[express-jwt](https://github.com/auth0/express-jwt)的方式验证来源的合法性。
+

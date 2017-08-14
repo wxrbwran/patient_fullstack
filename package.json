@@ -107,7 +107,6 @@
     "whatwg-fetch": "2.0.3"
   },
   "proxy": "http://127.0.0.1:3001",
-  "stylelint": "stylelint src/**/*.scss src/**/*.css",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
