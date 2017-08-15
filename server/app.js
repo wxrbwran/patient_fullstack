@@ -14,6 +14,8 @@ const csurf = require('csurf');
 const config = require('./config');
 const index = require('./routes/index');
 const patientApi = require('./routes/patientApi');
+const initApi = require('./routes/init');
+
 // const rest = require('./routes/restful-api');
 
 const app = express();
@@ -128,6 +130,7 @@ app.use(session({
 
 app.use('/', index);
 app.use('/api/patient', require('cors')(), patientApi);
+app.use('/api/patient', require('cors')(), initApi);
 
 app.use(function(req, res, next) {
   res.status(404);

@@ -26,7 +26,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phone: null,
+      tel: null,
       password: null,
       passwordType: 'password',
     };
@@ -53,10 +53,10 @@ class Login extends Component {
     });
   }
   submitLogin = () => {
-    const { phone, password } = this.state;
-    if (!!phone && !!password) {
+    const { tel, password } = this.state;
+    if (!!tel && !!password) {
       this.props.actions.login({
-        phone,
+        tel,
         password,
       });
     } else {
@@ -65,7 +65,7 @@ class Login extends Component {
   }
   render() {
     const { getFieldProps } = this.props.form;
-    const { passwordType, phone, password } = this.state;
+    const { passwordType, tel, password } = this.state;
     return (
       <div className="login">
         <p className={style.to_reg}>
@@ -78,10 +78,10 @@ class Login extends Component {
         <p className={style.text}>电话</p>
         <WhiteSpace />
         <InputItem
-          {...getFieldProps('phone')}
+          {...getFieldProps('tel')}
           type="phone"
-          onChange={val => this.changeStateByValue('phone', val)}
-          value={phone}
+          onChange={val => this.changeStateByValue('tel', val)}
+          value={tel}
         >+86</InputItem>
         <p className={style.text}>密码</p>
         <WhiteSpace />
@@ -104,7 +104,7 @@ class Login extends Component {
         <Button
           className={style.btn}
           type="primary"
-          disabled={!phone || !password}
+          disabled={!tel || !password}
           onClick={this.submitLogin}
         >
           登录

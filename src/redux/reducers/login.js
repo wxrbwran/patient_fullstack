@@ -10,7 +10,7 @@ const initialState = {
   isAuthenticated: false,
   isSuccess: false,
   isFail: false,
-  phone: null,
+  tel: null,
   message: null,
 };
 

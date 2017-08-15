@@ -4,7 +4,7 @@
 const mongoose = require('mongoose');
 
 const validateCodeSchema = mongoose.Schema({
-  phone: {
+  tel: {
     type: String,
     required: true,
   },

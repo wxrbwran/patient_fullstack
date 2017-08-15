@@ -39,7 +39,7 @@ class News extends Component {
           onClose={this.toggleModal}
           footer={[{
             text: '确定',
-            onPress: () => { console.log('ok'); this.toggleModal(); },
+            onPress: () => { this.toggleModal(); },
           }]}
         >
           这是内容...<br />

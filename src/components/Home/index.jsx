@@ -5,13 +5,12 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Icon } from 'antd-mobile';
 import RecentPlan from '../RecentPlan';
-import style from './index.scss';
 import head from './img/head@3x.png';
 import plan from './img/plan.png';
 import ask from './img/ask@3x.png';
 import check from './img/check@3x.png';
 import advice from './img/advice.png';
-
+import style from './index.scss';
 
 class Home extends Component {
   static propTypes = {
@@ -34,6 +33,7 @@ class Home extends Component {
               服药达标率
               <span>50.1%</span>
               <Icon type="right" />
+              <span>i</span>
             </p>
             <div />
           </div>
@@ -68,7 +68,8 @@ class Home extends Component {
           </div>
           <div className={style.dadvice}>
             <p>
-              asdhskjadhskjadhksahjdaskjdhsakjdhsajkdhasdasdasdasdasdadsdasdaddasdsaasdasdsadasdasdasd
+              asdhskjadhskjadhksahjdaskjdhsakjdhsajkdhasdasd
+              asdasdasdadsdasdaddasdsaasdasdsadasdasdasd
               skajhaskdhjaskdaskjdhksadksajdhsadhasdkjhsad
               sjdaskdjkjsahdkjsadhksajhdkjsahdkasjhdkjhsazzzzzzzzzzz
             </p>

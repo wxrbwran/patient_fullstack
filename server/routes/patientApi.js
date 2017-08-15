@@ -7,8 +7,8 @@ const ValidateCode = require("../models/validateCode");
 const User = require("../models/user");
 
 router.post('/validate_code', function (req, res) {
-  const { phone } = req.body;
-  if (!!phone) {
+  const { tel } = req.body;
+  if (!!tel) {
     let code = ~~(Math.random() * (10 ** 4));
     if (code > 1000) {
       code = `${code}`.padStart(4, 0);
@@ -21,7 +21,7 @@ router.post('/validate_code', function (req, res) {
     //   }
     // });
     ValidateCode.update(
-        { phone },
+        { tel },
         {"$set": { code }},
         {upsert: true},
         (err, data) => {
@@ -51,16 +51,16 @@ router.post('/validate_code', function (req, res) {
 
 router.post('/register', function (req, res) {
   // console.log(req.session, req.session.code);
-  const { phone, code, password } = req.body;
-  if (!!phone && !!code && !!password) {
-    ValidateCode.find({phone, code}, function (err, data) {
+  const { tel, code, password } = req.body;
+  if (!!tel && !!code && !!password) {
+    ValidateCode.find({tel, code}, function (err, data) {
       if (err) {
         res.json({
           status: 'fail',
           message: err.stack,
         });
       } else if (data.length === 1){
-        User.find({phone}, function (err, users) {
+        User.find({tel}, function (err, users) {
           if (err) {
             res.json({
               status: 'fail',
@@ -74,7 +74,7 @@ router.post('/register', function (req, res) {
               });
             } else {
               const user = new User({
-                phone,
+                tel,
                 password,
               });
               user.save()
@@ -110,20 +110,20 @@ router.post('/register', function (req, res) {
 router.post('/login', function (req, res) {
   const { grant_type } = req.body;
   if (grant_type === 'password') {
-    const { phone, password } = req.body;
-    if (!!phone && !!password) {
-      User.find({phone, password})
+    const { tel, password } = req.body;
+    if (!!tel && !!password) {
+      User.find({tel, password})
         .then(user => {
           if (user.length === 1) {
             const token = jsonwebtoken.sign({
               uid: user[0]['_id'],
-              phone: user[0]['phone'],
+              tel: user[0]['tel'],
             }, config.token.secret, {
               expiresIn: config.token.expired
             });
             const refresh_token = jsonwebtoken.sign({
               uid: user[0]['_id'],
-              phone: user[0]['phone'],
+              tel: user[0]['tel'],
             }, config.token.secret, {
               expiresIn: config.token.refresh
             });
@@ -132,7 +132,7 @@ router.post('/login', function (req, res) {
               token,
               refresh_token,
               data: {
-                phone,
+                tel,
               },
             });
           } else {
@@ -172,13 +172,13 @@ router.post('/login', function (req, res) {
         } else if (user) {
           const token = jsonwebtoken.sign({
             uid: user['_id'],
-            phone: user['phone'],
+            tel: user['tel'],
           }, config.token.secret, {
             expiresIn: config.token.expired
           });
           const refresh_token = jsonwebtoken.sign({
             uid: user['_id'],
-            phone: user['phone'],
+            tel: user['tel'],
           }, config.token.secret, {
             expiresIn: config.token.refresh
           });
@@ -187,7 +187,7 @@ router.post('/login', function (req, res) {
             token,
             refresh_token,
             data: {
-              phone: user['phone'],
+              tel: user['tel'],
             },
           });
         } else {

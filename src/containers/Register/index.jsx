@@ -24,7 +24,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phone: null,
+      tel: null,
       passwordType: 'password',
       password: null,
       code: null,
@@ -41,14 +41,14 @@ class Register extends Component {
     });
   }
   sendCode = () => {
-    const { phone } = this.state;
-    if (!!phone) {
+    const { tel } = this.state;
+    if (!!tel) {
       this.setState({
         isSend: true,
         codeText: '10s',
       });
       api.post('validate_code', {
-        phone,
+        tel,
       })
         .then(() => {
           Toast.success('验证码已发送~');
@@ -80,9 +80,9 @@ class Register extends Component {
     });
   }
   submitRegister = () => {
-    const { phone, code, password } = this.state;
+    const { tel, code, password } = this.state;
     api.post('register', {
-      phone,
+      tel,
       code,
       password,
     })
@@ -97,12 +97,11 @@ class Register extends Component {
       }
     })
     .catch((err) => {
-      console.log(err);
       Toast.fail(err);
     });
   }
   render() {
-    const { phone, passwordType, password,
+    const { tel, passwordType, password,
       code, isSend, codeText, isAgree } = this.state;
     const { getFieldProps } = this.props.form;
     return (
@@ -123,11 +122,11 @@ class Register extends Component {
           </p>
           <WhiteSpace />
           <InputItem
-            {...getFieldProps('phone')}
+            {...getFieldProps('tel')}
             type="phone"
             onChange={val =>
-              changeStateByValue(this, 'phone', val)}
-            value={phone}
+              changeStateByValue(this, 'tel', val)}
+            value={tel}
           >+86</InputItem>
           <p className={style.text}>
             验证码
@@ -192,7 +191,7 @@ class Register extends Component {
         <Button
           className={style.btn}
           type="primary"
-          disabled={!phone || !isAgree}
+          disabled={!tel || !isAgree}
           onClick={this.submitRegister}
         >
           注册

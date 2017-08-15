@@ -21,9 +21,18 @@
     font-size: 30px;
     @include lh(50px);
 
-    span {
+    span:first-of-type {
       margin: 0 10px 0 20px;
       color: $red-color;
+    }
+    span:last-of-type{
+      margin-left: 10px;
+      display: inline-block;
+      @include size(30px);
+      line-height: 30px;
+      border: 2px solid $main-text-color;
+      text-align: center;
+      border-radius: 50%;
     }
   }
   > div {
