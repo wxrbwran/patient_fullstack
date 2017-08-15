@@ -6,7 +6,7 @@ import { authApi } from '../utils/api';
 
 export default function loginApi(params) {
   return authApi.post('/login', {
-    phone: params.phone,
+    tel: params.tel,
     password: params.password,
     grant_type: 'password',
   });

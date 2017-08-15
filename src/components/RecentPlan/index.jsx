@@ -14,26 +14,28 @@ class RecentPlan extends Component {
 
   render() {
     return (
-      <div className={style.plan}>
-        <div className={style.title}>
-          <span>
-            下一次
-          </span>
-          <span>
-            今天&nbsp;13:00
-          </span>
-        </div>
-        <ul className={style.list}>
-          <li>
+      <ul className={style.plan}>
+        <li>
+          <div className={style.title}>
             <span>
-              阿司匹林
+              下一次
             </span>
             <span>
-              10mg&nbsp;x&nbsp;2
+              今天&nbsp;13:00
             </span>
-          </li>
-        </ul>
-      </div>
+          </div>
+          <ul className={style.medicine__list}>
+            <li>
+              <span>
+                阿司匹林
+              </span>
+              <span>
+                10mg&nbsp;x&nbsp;2
+              </span>
+            </li>
+          </ul>
+        </li>
+      </ul>
     );
   }
 }

@@ -41,7 +41,6 @@ function protectApi() {
   // now apply all protected interceptors
   interceptors.response.protected.push(api.interceptors.response.use(
     (response) => {
-      console.log(response);
       if (!response.data) {
         return Promise.reject('请求失败');
       }
@@ -64,13 +63,11 @@ function protectApi() {
         return Promise.reject('网络异常');
       } else if (error.response &&
         error.response.status === 401) {
-        console.log('401');
         const reqConfig = error.config;
         return authApi.post('login', {
           refresh_token: localStorage.refresh_token,
           grant_type: 'refresh_token',
         }).then((res) => {
-          console.log(res);
           if (res.status === 200 && res.data) {
             setAuthorizationToken(res.data.token);
             const localStorage = window.localStorage;

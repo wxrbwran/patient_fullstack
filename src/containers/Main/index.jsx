@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from './actions';
 import Home from '../../components/Home';
 import Plan from '../../components/Plan';
 import News from '../../components/News';
@@ -33,6 +35,7 @@ class Main extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
   };
   constructor(props) {
@@ -56,6 +59,9 @@ class Main extends Component {
     } else {
       history.push('/login');
     }
+  }
+  componentDidMount() {
+    this.props.actions.init();
   }
   changeTab = (tab) => {
     const { history, location } = this.props;
@@ -123,5 +129,7 @@ export default connect(
   state => ({
     isAuthenticated: state.login.isAuthenticated,
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators(actions, dispatch),
+  }),
 )(Main);
