@@ -29,15 +29,21 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_USER:
-      return Object.assign({}, state);
+      return Object.assign({}, state, {
+        isSuccess: false,
+        isFail: false,
+        message: null,
+      });
     case FETCH_USER_SUCCESS:
       return Object.assign({}, state, {
         isSuccess: true,
+        isFail: false,
         ...action.payload,
       });
     case FETCH_USER_FAIL:
       return Object.assign({}, state, {
         isFail: true,
+        isSuccess: false,
         message: action.payload,
       });
     default:
