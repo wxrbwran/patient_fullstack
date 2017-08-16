@@ -48,7 +48,6 @@ class Main extends Component {
     const { location, history,
       isAuthenticated } = this.props;
     if (isAuthenticated) {
-      console.log(isAuthenticated);
       const { tab } = this.state;
       if (!location.pathname.includes(tab)) {
         const arr = location.pathname.split('/');
