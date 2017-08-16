@@ -24,15 +24,6 @@ function unprotectApi() {
   interceptors.request.unprotected.push(interceptor);
 }
 
-export function logout() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('refresh_token');
-  setAuthorizationToken(false);
-  unprotectApi();
-  // dispatch(removeCurrentUser());
-  history().push('/login');
-}
-
 function protectApi() {
   // first eject all unprotected interceptors?
   interceptors.request.unprotected.map(interceptor => (
@@ -80,7 +71,8 @@ function protectApi() {
           }
           return Promise.reject('登录超时');
         }).catch(() => {
-          logout();
+          // logout();
+          dispatch({ type: 'LOGOUT_REQUEST' });
           return Promise.reject('登录超时');
           // already logged out, not interested in data
         });
@@ -107,10 +99,23 @@ function* login(action) {
     yield put({ type: 'LOGIN_FAIL', payload: err });
   }
 }
-export default function* watchLogin() {
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('refresh_token');
+  setAuthorizationToken(false);
+  unprotectApi();
+  // yield put({ type: 'LOGOUT_REQUEST' });
+  history().push('/login');
+}
+
+export function* watchLogin() {
   yield takeLatest('LOGIN_REQUEST', login);
 }
 
+export function* watchLogout() {
+  yield takeLatest('LOGOUT_REQUEST', logout);
+}
 
 export function loadSession(dis) {
   dispatch = dis;

@@ -76,8 +76,8 @@ router.post('/register', function (req, res) {
             } else {
               const user = new User({
                 tel,
-                password: crypto.createHmac('sha256', config.salt)
-                  .update(password)
+                password: crypto.createHmac('sha256', config.password.secret)
+                  .update(password+config.password.salt)
                   .digest('hex'),
               });
               user.save()
@@ -117,8 +117,8 @@ router.post('/login', function (req, res) {
     const { tel, password } = req.body;
     if (!!tel && !!password) {
       User.find({tel, password:
-        crypto.createHmac('sha256', config.salt)
-        .update(password)
+        crypto.createHmac('sha256', config.password.secret)
+        .update(password+config.password.salt)
         .digest('hex')})
         .then(user => {
           if (user.length === 1) {

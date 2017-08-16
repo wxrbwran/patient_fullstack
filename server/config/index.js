@@ -13,5 +13,8 @@ module.exports = {
     expired: '1h',
     refresh: '2h'
   },
-  salt: 'wxr_rua!'
+  password: {
+    salt: 'patient',
+    secret: 'wxr_rua!'
+  },
 };

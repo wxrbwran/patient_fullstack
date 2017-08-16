@@ -9,7 +9,9 @@ router.get('/',
   function (req, res) {
     res.json({
       status: 'success',
-      data: null,
+      data: {
+        name: 'www',
+      },
     })
   });
 

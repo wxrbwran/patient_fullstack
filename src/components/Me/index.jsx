@@ -2,12 +2,16 @@
  * Created by wuxiaoran on 2017/8/10.
  */
 import React, { Component } from 'react';
-// import { PropTypes } from 'prop-types';
+import { PropTypes } from 'prop-types';
+import { Button } from 'antd-mobile';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as logActions from '../../redux/actions/login';
 import { api } from '../../utils/api';
 
 class Me extends Component {
   static propTypes = {
-    // someProps: PropTypes.any,
+    logActions: PropTypes.object,
   };
   constructor(props) {
     super(props);
@@ -23,9 +27,27 @@ class Me extends Component {
   }
   render() {
     return (
-      <div>memememememe</div>
+      <div>
+        <Button
+          type="ghost"
+          inline
+          size="small"
+          onClick={this.props.logActions.logout}
+          style={{
+            marginRight: '0 auto',
+            color: '#fff',
+          }}
+        >
+          退出登录
+        </Button>
+      </div>
     );
   }
 }
 
-export default Me;
+export default connect(
+  null,
+  dispatch => ({
+    logActions: bindActionCreators(logActions, dispatch),
+  }),
+)(Me);

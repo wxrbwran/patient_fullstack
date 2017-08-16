@@ -18,6 +18,7 @@ import style from './index.scss';
 class Home extends Component {
   static propTypes = {
     actions: PropTypes.object,
+    name: PropTypes.string,
   };
   constructor(props) {
     super(props);
@@ -28,12 +29,13 @@ class Home extends Component {
     this.props.actions.fetchUser();
   }
   render() {
+    const { name } = this.props;
     return (
       <div className={style.home}>
         <div className={style.info}>
           <div className={style.detail}>
             <h1>
-              早上好,1231231231
+              早上好,{ name }
             </h1>
             <p>
               服药达标率
