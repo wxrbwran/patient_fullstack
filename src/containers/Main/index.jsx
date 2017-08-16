@@ -35,7 +35,7 @@ class Main extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+    // actions: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
   };
   constructor(props) {
@@ -61,7 +61,7 @@ class Main extends Component {
     }
   }
   componentDidMount() {
-    this.props.actions.init();
+    // this.props.actions.init();
   }
   changeTab = (tab) => {
     const { history, location } = this.props;

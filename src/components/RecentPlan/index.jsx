@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import style from './index.scss';
 
 class RecentPlan extends Component {
   static propTypes = {
-    someProps: PropTypes.any,
+    // someProps: PropTypes.any,
   };
 
   constructor(props) {

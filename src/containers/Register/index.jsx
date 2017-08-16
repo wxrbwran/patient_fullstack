@@ -86,15 +86,10 @@ class Register extends Component {
       code,
       password,
     })
-    .then((res) => {
-      const { status } = res.data;
+    .then(() => {
       const { history } = this.props;
-      if (status === 'success') {
-        Toast.success('注册成功!');
-        history.push('/login');
-      } else {
-        Toast.fail(res.data.message);
-      }
+      Toast.success('注册成功!');
+      history.push('/login');
     })
     .catch((err) => {
       Toast.fail(err);

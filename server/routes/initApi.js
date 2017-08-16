@@ -4,7 +4,7 @@ const jsonwebtoken  = require('jsonwebtoken');
 const jwt = require('express-jwt');
 const config = require('../config');
 
-router.post('/init',
+router.post('/',
   jwt({secret: config.token.secret}),
   function (req, res) {
     res.json({
