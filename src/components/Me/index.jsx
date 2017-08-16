@@ -2,12 +2,12 @@
  * Created by wuxiaoran on 2017/8/10.
  */
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { api } from '../../utils/api';
 
 class Me extends Component {
   static propTypes = {
-    someProps: PropTypes.any,
+    // someProps: PropTypes.any,
   };
   constructor(props) {
     super(props);

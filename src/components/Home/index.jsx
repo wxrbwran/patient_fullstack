@@ -4,6 +4,9 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Icon } from 'antd-mobile';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../../redux/actions/user';
 import RecentPlan from '../RecentPlan';
 import head from './img/head@3x.png';
 import plan from './img/plan.png';
@@ -14,12 +17,15 @@ import style from './index.scss';
 
 class Home extends Component {
   static propTypes = {
-    someProps: PropTypes.any,
+    actions: PropTypes.object,
   };
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+  componentDidMount() {
+    this.props.actions.fetchUser();
   }
   render() {
     return (
@@ -83,4 +89,28 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect(
+  state => ({
+    name: state.user.name,
+    area: state.user.area,
+    address: state.user.address,
+    avatar: state.user.avatar,
+    birthday: state.user.birthday,
+    sex: state.user.sex,
+    status: state.user.status,
+    tel: state.user.tel,
+    type: state.user.type,
+    height: state.user.height,
+    weight: state.user.weight,
+    waistline: state.user.waistline,
+    bindingDoctor: state.user.bindingDoctor,
+    marriage: state.user.marriage,
+    education: state.user.education,
+    isSuccess: state.user.isSuccess,
+    isFail: state.user.isFail,
+    message: state.user.message,
+  }),
+  dispatch => ({
+    actions: bindActionCreators(actions, dispatch),
+  }),
+)(Home);

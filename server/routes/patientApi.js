@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const jsonwebtoken  = require('jsonwebtoken');
 const jwt = require('express-jwt');
 const config = require('../config');
@@ -10,7 +11,7 @@ router.post('/validate_code', function (req, res) {
   const { tel } = req.body;
   if (!!tel) {
     let code = ~~(Math.random() * (10 ** 4));
-    if (code > 1000) {
+    if (code < 1000) {
       code = `${code}`.padStart(4, 0);
     }
     // req.session.code = code;
@@ -22,7 +23,7 @@ router.post('/validate_code', function (req, res) {
     // });
     ValidateCode.update(
         { tel },
-        {"$set": { code }},
+        {"$set": { code: `${code}` }},
         {upsert: true},
         (err, data) => {
             if (err) {
@@ -75,7 +76,9 @@ router.post('/register', function (req, res) {
             } else {
               const user = new User({
                 tel,
-                password,
+                password: crypto.createHmac('sha256', config.salt)
+                  .update(password)
+                  .digest('hex'),
               });
               user.save()
                 .then(userRes => {
@@ -107,12 +110,16 @@ router.post('/register', function (req, res) {
     });
   }
 });
+
 router.post('/login', function (req, res) {
   const { grant_type } = req.body;
   if (grant_type === 'password') {
     const { tel, password } = req.body;
     if (!!tel && !!password) {
-      User.find({tel, password})
+      User.find({tel, password:
+        crypto.createHmac('sha256', config.salt)
+        .update(password)
+        .digest('hex')})
         .then(user => {
           if (user.length === 1) {
             const token = jsonwebtoken.sign({

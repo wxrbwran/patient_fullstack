@@ -10,14 +10,14 @@ const mongoose = require('mongoose');
 const MongoSessionStore = require('connect-mongo')(session);
 const helmet = require('helmet');
 const csurf = require('csurf');
-
+const expressControllers = require('express-controller');
 const config = require('./config');
 const index = require('./routes/index');
 const patientApi = require('./routes/patientApi');
-const initApi = require('./routes/init');
+const initApi = require('./routes/initApi');
+const userApi = require('./routes/userApi');
 
-// const rest = require('./routes/restful-api');
-
+// var router = express.Router();
 const app = express();
 
 mongoose.Promise = require('bluebird');
@@ -80,6 +80,11 @@ app.use(function(req, res, next) {
   domain.run(next);
 });
 
+// app.use('/api/patient', require('cors')(), router);
+// expressControllers
+//   .setDirectory( __dirname + '/controllers')
+//   .bind(router);
+
 // require('./controllers/customer').registerRoutes(app);
 switch (app.get('env')) {
   case 'production':
@@ -130,7 +135,9 @@ app.use(session({
 
 app.use('/', index);
 app.use('/api/patient', require('cors')(), patientApi);
-app.use('/api/patient', require('cors')(), initApi);
+app.use('/api/patient/init', require('cors')(), initApi);
+app.use('/api/patient/user', require('cors')(), userApi);
+
 
 app.use(function(req, res, next) {
   res.status(404);

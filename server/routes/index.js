@@ -24,26 +24,11 @@ router.get('/', async function(req, res, next) {
     userName: !!req.session ? req.session.userName : null,
   });
 });
-router.get('/about', function(req, res, next) {
-  res.render('about', {
-    title: 'about',
-    text: 'about me',
-  });
-});
 
 router.get('/about/:userId', function(req, res, next) {
   res.type('text/plain');
   console.log(req.params, req.query, req.body, req.xhr, req.url);
   res.send('about');
-});
-
-router.get('/headers', function(req, res, next) {
-  res.type('text/plain');
-  let s = '';
-  for (let k in req.headers) {
-    s += `${k}:${req.headers[k]}\n`;
-  }
-  res.send(s);
 });
 
 router.get('/test', function(req, res, next) {
@@ -64,13 +49,6 @@ router.get('/test', function(req, res, next) {
   });
 });
 
-router.get('/home', function(req, res, next) {
-  if (!res.locals.partials) {
-    res.locals.partials = {};
-  }
-  res.locals.partials.weather = getWeatherData();
-  res.render('home');
-});
 router.get('/newsletter', function(req, res) {
   res.cookie('monster', 'mom mon');
   res.cookie('signedMonster', 'mom mon11', { signed: true });
@@ -101,32 +79,5 @@ router.post('/process', upload.single('photo'), function(req, res) {
   }
 });
 
-function getWeatherData() {
-  return {
-    locations: [
-      {
-        name: 'Portland',
-        forecastUrl: 'http://www.wunderground.com/US/OR/Portland.html',
-        iconUrl: 'http://icons-ak.wxug.com/i/c/k/cloudy.gif',
-        weather: 'Overcast',
-        temp: '54.1 F (12.3 C)',
-      },
-      {
-        name: 'Bend',
-        forecastUrl: 'http://www.wunderground.com/US/OR/Bend.html',
-        iconUrl: 'http://icons-ak.wxug.com/i/c/k/partlycloudy.gif',
-        weather: 'Partly Cloudy',
-        temp: '55.0 F (12.8 C)',
-      },
-      {
-        name: 'Manzanita',
-        forecastUrl: 'http://www.wunderground.com/US/OR/Manzanita.html',
-        iconUrl: 'http://icons-ak.wxug.com/i/c/k/rain.gif',
-        weather: 'Light Rain',
-        temp: '55.0 F (12.8 C)',
-      },
-    ],
-  };
-}
 
 module.exports = router;

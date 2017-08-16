@@ -9,7 +9,6 @@ import { INIT_SUCCESS,
 export function* init() {
   try {
     const res = yield call(initApi);
-    console.log(res);
     yield put({ type: INIT_SUCCESS, payload: res });
   } catch (err) {
     yield put({ type: INIT_FAIL, payload: err });
