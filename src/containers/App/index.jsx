@@ -5,6 +5,8 @@ import Login from '../Login/index';
 import Register from '../Register';
 import Agreement from '../Agreement';
 import Main from '../Main';
+import EditUser from '../EditUser';
+
 import './index.scss';
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/agreement" component={Agreement} />
+        <Route exact path="/user/edit" component={EditUser} />
       </div>
     </Router>
   );

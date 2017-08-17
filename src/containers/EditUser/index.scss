@@ -1,0 +1,42 @@
+.user__edit{
+
+}
+.content{
+  padding: 0 24px 0 0;
+  :global{
+    .am-input-label,
+    .am-list-content{
+      color: $main-text-color !important;
+    }
+    .am-input-control input{
+      text-align: right;
+    }
+  }
+}
+%uploadImg{
+  position: absolute;
+  top: 32px;
+  @include size(120px);
+  left: 50%;
+  margin-left: -60px;
+}
+.upload__head{
+  height: 222px;
+  @include flex-lay(column, nowrap, flex-start, center);
+  position: relative;
+  //border-bottom: 2px solid $borderColor;
+  > img {
+    z-index: 1;
+    @extend %uploadImg;
+  }
+  > input {
+    z-index: 9;
+    opacity: 0;
+    @extend %uploadImg;
+  }
+  > h3 {
+    margin-top: 168px;
+    font-size: 28px;
+    color: #c5c5c5;
+  }
+}

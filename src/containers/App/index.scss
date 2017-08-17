@@ -15,4 +15,12 @@
       }
     }
   }
+  .am-navbar{
+    border-bottom: 2px solid $borderColor;
+    .am-icon-left,
+    .am-navbar-right{
+      color: $theme-color;
+    }
+  }
 }
+

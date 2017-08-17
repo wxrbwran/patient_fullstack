@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../../redux/actions/user';
 import RecentPlan from '../RecentPlan';
-import head from './img/head@3x.png';
+import head from '../../assets/img/default_head@3x.png';
 import plan from './img/plan.png';
 import ask from './img/ask@3x.png';
 import check from './img/check@3x.png';

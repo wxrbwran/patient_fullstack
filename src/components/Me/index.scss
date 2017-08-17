@@ -1,0 +1,67 @@
+.me{
+  @include flex-lay(column, nowrap, flex-start, flex-start);
+}
+.banner{
+  height: 500px;
+  flex: 0 0 500px;
+  width: 100%;
+  background-image: linear-gradient(to bottom left, #4cbbc3, #6aabe0);
+  @include flex-lay(column, nowrap, flex-start, center);
+  img{
+    @include size(150px);
+    margin-top: 150px;
+  }
+  .name{
+    font-size: 36px;
+    @include lh(84px);
+    color: #fff;
+    span{
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 24px;
+      position: relative;
+      top: -6px;
+    }
+  }
+  .bmi{
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    text-align: center;
+    color: $main-text-color;
+    span{
+      color: $theme-color;
+    }
+  }
+}
+.action{
+  align-self: stretch;
+  padding: 40px;
+  flex: 1 1 auto;
+  overflow: visible;
+  @include flex-lay(column, nowrap, flex-start, flex-start);
+  background-color: #fff;
+  .action_items{
+    border-bottom: 2px solid $borderColor;
+    align-self: stretch;
+    @include flex-lay(row, nowrap, flex-start, flex-start);
+  }
+  .action_item{
+    height: 214px;
+    flex: 1 1 50%;
+    @include flex-lay(column, nowrap, center, center);
+    img{
+      @include size(44px, auto);
+      margin-bottom: 26px;
+    }
+    h3{
+      font-size: 30px;
+      color: $main-text-color;
+    }
+    &:nth-of-type(even){
+      border-left: 2px solid $borderColor;
+    }
+  }
+}
