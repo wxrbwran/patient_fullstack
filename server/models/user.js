@@ -13,7 +13,10 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   name: String,
-  area: String,
+  height: String,
+  weight: String,
+  waistline: String,
+  area: [String],
   address: String,
   avatar: String,
   birthday: Number,
@@ -30,9 +33,6 @@ const userSchema = mongoose.Schema({
     type: Number,
     enum: [1, 2], // 1: 患者, 2: 家属
   },
-  height: String,
-  weight: String,
-  waistline: String,
   marriage: {
     type: Number,
     enum: [0, 1], // 1: 已婚, 0: 未婚

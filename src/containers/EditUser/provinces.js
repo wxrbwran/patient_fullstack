@@ -1,6 +1,8 @@
 /**
  * Created by wuxiaoran on 2017/8/17.
  */
+
+/*eslint-disable*/
 module.exports = [{
   "value": "340000",
   "label": "安徽省",
