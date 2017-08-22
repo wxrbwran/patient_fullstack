@@ -5,9 +5,6 @@ import React, { Component } from 'react';
 // import { Icon } from 'antd-mobile';
 import { PropTypes } from 'prop-types';
 import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from './actions';
 import Home from '../../components/Home';
 import Plan from '../../components/Plan';
 import News from '../../components/News';
@@ -47,6 +44,7 @@ class Main extends Component {
   componentWillMount() {
     const { location, history,
       isAuthenticated } = this.props;
+    console.log(isAuthenticated);
     if (isAuthenticated) {
       const { tab } = this.state;
       if (!location.pathname.includes(tab)) {
@@ -126,11 +124,4 @@ class Main extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    isAuthenticated: state.login.isAuthenticated,
-  }),
-  dispatch => ({
-    actions: bindActionCreators(actions, dispatch),
-  }),
-)(Main);
+export default Main;

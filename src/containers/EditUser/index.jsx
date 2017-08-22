@@ -5,9 +5,12 @@ import React, { Component } from 'react';
 import { List, InputItem, NavBar, DatePicker,
   Picker, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { PropTypes } from 'prop-types';
+import * as actions from '../../redux/actions/user';
 // import qiniu from 'qiniu';
 import provinces from './provinces';
 import head from '../../assets/img/default_head@3x.png';
@@ -38,20 +41,29 @@ class EditUser extends Component {
       education: null,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    const { isFail, message, history,
+      isEditSuccess, isEditFail } = nextProps;
+    if (isEditSuccess) {
+      Toast.success('编辑成功!', 1, () => {
+        history.push('/main/me');
+      });
+    } else if (isEditFail || isFail) {
+      Toast.fail(message);
+    }
+  }
   onChangeFile = (files) => {
     this.setState({
       files,
     });
-  }
+  };
   saveUserInfo = () => {
-    console.log(this.state);
     this.props.form.validateFields((error, value) => {
       if (error) {
-        Toast.fail('请输入必要信息!');
-
+        Toast.fail('请输入姓名!');
       } else {
-        const { area, birthday,
-          education, marriage, sex } = this.state;
+        const {  sex, birthday, area,
+          marriage, education } = this.state;
         const data = Object.assign({}, value, {
           area,
           education: !!education ?  education[0] : null,
@@ -60,12 +72,13 @@ class EditUser extends Component {
           birthday: !!birthday ? +moment(birthday).format('x') : null,
         });
         console.log(data);
+        this.props.actions.editUser(data);
       }
     });
   }
   render() {
     const { getFieldProps, getFieldError } = this.props.form;
-    const { history } = this.props;
+    const { history, name } = this.props;
     const { files, sex, birthday,
       marriage, education, area } = this.state;
     return (
@@ -102,7 +115,7 @@ class EditUser extends Component {
               </Item>
               <InputItem
                 {...getFieldProps('name', {
-                  // initialValue: 'little ant',
+                  initialValue: name,
                   rules: [
                     { required: true, message: '请输入真实姓名!' },
                   ],
@@ -119,7 +132,7 @@ class EditUser extends Component {
                   { value: 1, label: '男' },
                 ]}
                 cols={1}
-                value={sex}
+                value={!!sex ? sex : [this.props.sex]}
                 onChange={val => this.setState({ sex: val })}
               >
                 <Item
@@ -136,10 +149,11 @@ class EditUser extends Component {
               <DatePicker
                 mode="date"
                 title="选择日期"
-                value={birthday}
+                value={birthday || (!!this.props.birthday ?
+                moment(this.props.birthday) : null)}
                 minDate={minDate}
                 maxDate={maxDate}
-                onChange={d => this.setState({ birthday: d })}
+                onChange={b => this.setState({ birthday: b })}
               >
                 <Item arrow="horizontal">出生日期</Item>
               </DatePicker>
@@ -147,7 +161,7 @@ class EditUser extends Component {
                 extra="请选择(可选)"
                 data={provinces}
                 title="选择地区"
-                value={area}
+                value={!!area ? area : this.props.area}
                 onChange={val => this.setState({ area: val })}
               >
                 <Item arrow="horizontal">选择地区</Item>
@@ -158,7 +172,7 @@ class EditUser extends Component {
                   { value: 1, label: '已婚' },
                 ]}
                 cols={1}
-                value={marriage}
+                value={!!marriage ? marriage : [this.props.marriage]}
                 onChange={val => this.setState({ marriage: val })}
               >
                 <Item
@@ -176,7 +190,7 @@ class EditUser extends Component {
                   { value: 5, label: '研究生及以上' },
                 ]}
                 cols={1}
-                value={education}
+                value={!!education ? education : [this.props.education]}
                 onChange={val => this.setState({ education: val })}
               >
                 <Item
@@ -186,28 +200,31 @@ class EditUser extends Component {
                 </Item>
               </Picker>
               <InputItem
-                {...getFieldProps('height')}
+                {...getFieldProps('height', {
+                  initialValue: this.props.height,
+                })}
                 clear
                 type="number"
-                error={!!getFieldError('height')}
                 extra="cm"
               >
                 身高
               </InputItem>
               <InputItem
-                {...getFieldProps('weight')}
+                {...getFieldProps('weight', {
+                  initialValue: this.props.weight,
+                })}
                 clear
                 type="number"
-                error={!!getFieldError('weight')}
                 extra="kg"
               >
                 体重
               </InputItem>
               <InputItem
-                {...getFieldProps('waistline')}
+                {...getFieldProps('waistline', {
+                  initialValue: this.props.waistline,
+                })}
                 clear
                 type="number"
-                error={!!getFieldError('waistline')}
                 extra="cm"
               >
                 腰围
@@ -220,4 +237,30 @@ class EditUser extends Component {
   }
 }
 
-export default createForm()(EditUser);
+export default connect(
+  state => ({
+    name: state.user.name,
+    area: state.user.area,
+    address: state.user.address,
+    avatar: state.user.avatar,
+    birthday: state.user.birthday,
+    sex: state.user.sex,
+    status: state.user.status,
+    tel: state.user.tel,
+    type: state.user.type,
+    height: state.user.height,
+    weight: state.user.weight,
+    waistline: state.user.waistline,
+    bindingDoctor: state.user.bindingDoctor,
+    marriage: state.user.marriage,
+    education: state.user.education,
+    message: state.user.message,
+    isSuccess: state.user.isSuccess,
+    isFail: state.user.isFail,
+    isEditSuccess: state.user.isEditSuccess,
+    isEditFail: state.user.isEditFail,
+  }),
+  dispatch => ({
+    actions: bindActionCreators(actions, dispatch),
+  }),
+)(createForm()(EditUser));

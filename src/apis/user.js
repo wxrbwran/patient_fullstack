@@ -3,6 +3,10 @@
  */
 import { api } from '../utils/api';
 
-export default function fetchUserApi() {
-  return api.get('user');
+export function fetchUserApi() {
+  return api.get('user/info');
+}
+
+export function editUserApi(params) {
+  return api.patch('user', params);
 }

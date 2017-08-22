@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const jsonwebtoken  = require('jsonwebtoken');
 const jwt = require('express-jwt');
 const config = require('../config');
+const { decodeToken } = require('../util/decodeToken');
 const ValidateCode = require("../models/validateCode");
 const User = require("../models/user");
 
@@ -76,7 +77,8 @@ router.post('/register', function (req, res) {
             } else {
               const user = new User({
                 tel,
-                password: crypto.createHmac('sha256', config.password.secret)
+                password: crypto.createHmac('sha256',
+                  config.password.secret)
                   .update(password+config.password.salt)
                   .digest('hex'),
               });
@@ -164,9 +166,7 @@ router.post('/login', function (req, res) {
   }
   else if (grant_type === 'refresh_token') {
     const refresh_token = req.body.refresh_token;
-    var decoded = jsonwebtoken.verify(refresh_token,
-      config.token.secret);
-    const { uid, exp } = decoded;
+    const { uid, exp } = decodeToken(refresh_token);
     console.log(exp, Date.now());
     if (exp * 1000 > Date.now()) {
       User.findById(uid, function (err, user) {
@@ -215,15 +215,15 @@ router.post('/login', function (req, res) {
 });
 
 
-router.get('/user/info',
-  jwt({secret: config.token.secret}),
-  function (req, res) {
-    res.json({
-      status: 'success',
-      data: {
-        name: '吉尔伽美什',
-      }
-    });
-});
+// router.get('/user/info',
+//   jwt({secret: config.token.secret}),
+//   function (req, res) {
+//     res.json({
+//       status: 'success',
+//       data: {
+//         name: '吉尔伽美什',
+//       }
+//     });
+// });
 
 module.exports = router;

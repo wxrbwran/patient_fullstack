@@ -2,7 +2,7 @@
  * Created by wuxiaoran on 2017/8/10.
  */
 import React, { Component } from 'react';
-// import { PropTypes } from 'prop-types';
+import { PropTypes } from 'prop-types';
 // import { Button } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -20,7 +20,9 @@ import setting from './img/me_icon_set@3x.png';
 
 class Me extends Component {
   static propTypes = {
-    // logActions: PropTypes.object,
+    logActions: PropTypes.object,
+    name: PropTypes.string,
+    BMI: PropTypes.string,
   };
   constructor(props) {
     super(props);
@@ -35,6 +37,7 @@ class Me extends Component {
     .catch(err => console.log(err));
   }
   render() {
+    const { name, BMI } = this.props;
     return (
       <div className={style.me}>
         <div className={style.banner}>
@@ -43,11 +46,11 @@ class Me extends Component {
           </Link>
           <Link to="/user/edit">
             <p className={style.name}>
-              哦哦哦<span>&gt;</span>
+              {name}<span>&gt;</span>
             </p>
           </Link>
           <p className={style.bmi}>
-            BMI: <span>27.5</span>
+            BMI: <span>{ BMI }</span>
           </p>
         </div>
         <div className={style.action}>
@@ -76,7 +79,10 @@ class Me extends Component {
               <img src={relatives} alt="亲友" />
               <h3>我的亲友</h3>
             </div>
-            <div className={style.action_item}>
+            <div
+              className={style.action_item}
+              onClick={this.props.logActions.logout}
+            >
               <img src={setting} alt="设置" />
               <h3>设置</h3>
             </div>
@@ -88,7 +94,10 @@ class Me extends Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    name: state.user.name,
+    BMI: state.user.BMI,
+  }),
   dispatch => ({
     logActions: bindActionCreators(logActions, dispatch),
   }),

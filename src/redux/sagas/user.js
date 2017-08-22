@@ -2,10 +2,11 @@
  * Created by wuxiaoran on 2017/8/16.
  */
 import { put, call, takeLatest } from 'redux-saga/effects';
-import fetchUserApi from '../../apis/user';
-import { FETCH_USER,
-  FETCH_USER_SUCCESS,
-  FETCH_USER_FAIL } from '../constants/user';
+import { fetchUserApi, editUserApi,
+  } from '../../apis/user';
+import { FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_FAIL,
+  EDIT_USER, EDITING, EDIT_USER_SUCCESS, EDIT_USER_FAIL,
+  } from '../constants/user';
 
 function* userRequest() {
   try {
@@ -16,6 +17,22 @@ function* userRequest() {
   }
 }
 
-export default function* watchUserRequest() {
+export function* watchUserRequest() {
   yield takeLatest(FETCH_USER, userRequest);
+}
+
+function* userEdit(action) {
+  try {
+    yield call(editUserApi, action.payload);
+    yield put({ type: EDIT_USER_SUCCESS,
+      payload: action.payload });
+    yield put({ type: EDITING });
+  } catch (err) {
+    yield put({ type: EDIT_USER_FAIL, payload: err });
+    yield put({ type: EDITING });
+  }
+}
+
+export function* watchUserEdit() {
+  yield takeLatest(EDIT_USER, userEdit);
 }

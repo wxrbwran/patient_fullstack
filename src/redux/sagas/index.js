@@ -3,14 +3,16 @@
  */
 import { all } from 'redux-saga/effects';
 import { watchLogin, watchLogout } from './login';
-import userSaga from './user';
-import initSaga from '../../containers/Main/sagas';
+import { watchUserEdit, watchUserRequest,
+  } from './user';
+// import initSaga from '../../containers/Main/sagas';
 
 export default function* rootSagas() {
   yield all([
     watchLogin(),
     watchLogout(),
-    userSaga(),
-    initSaga(),
+    watchUserRequest(),
+    watchUserEdit(),
+    // initSaga(),
   ]);
 }

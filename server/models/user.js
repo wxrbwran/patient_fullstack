@@ -47,6 +47,14 @@ const userSchema = mongoose.Schema({
 }, {
   collection: 'users',
 });
+userSchema.virtual('BMI').get(function() {
+  if (!!this.height && !!this.weight) {
+    return ((+this.weight)/(Math.pow((+this.height)/100, 2)))
+      .toFixed(2);
+  } else {
+    return 0;
+  }
+});
 
 const User = mongoose.model('User', userSchema);
 

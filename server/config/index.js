@@ -15,6 +15,6 @@ module.exports = {
   },
   password: {
     salt: 'patient',
-    secret: 'wxr_rua!'
+    secret: 'wxrrua'
   },
 };
