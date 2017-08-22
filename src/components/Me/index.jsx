@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as logActions from '../../redux/actions/login';
-import { api } from '../../utils/api';
+// import { api } from '../../utils/api';
 import style from './index.scss';
 import head from '../../assets/img/default_head@3x.png';
 import doctor from './img/me_icon_doctor@3x.png';
@@ -29,13 +29,13 @@ class Me extends Component {
     this.state = {
     };
   }
-  componentDidMount() {
-    api.get('user/info')
-    .then((res) => {
-      console.log(res);
-    })
-    .catch(err => console.log(err));
-  }
+  // componentDidMount() {
+  //   api.get('user/info')
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch(err => console.log(err));
+  // }
   render() {
     const { name, BMI } = this.props;
     return (
