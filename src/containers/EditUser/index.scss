@@ -1,8 +1,20 @@
 .user__edit{
-
+  background-color: #ffffff;
+  height: 100vh;
+  position: relative;
+}
+.nav{
+  position: fixed;
+  width: 100vw;
+  z-index: 9;
 }
 .content{
   padding: 0 24px 0 0;
+  position: relative;
+  top: 92px;
+  left: 0;
+  z-index: 1;
+  height: calc(100vh - 92px);
   :global{
     .am-input-label,
     .am-list-content{

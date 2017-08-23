@@ -11,7 +11,6 @@ import Auth from './containers/Auth';
 import Login from './containers/Login/index';
 import Register from './containers/Register';
 import Agreement from './containers/Agreement';
-import EditUser from './containers/EditUser';
 import './index.scss';
 
 require('./utils/fastclick.js');
@@ -41,7 +40,6 @@ ReactDOM.render(
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/agreement" component={Agreement} />
-        <Route exact path="/user/edit" component={Auth(EditUser)} />
       </div>
     </Router>
   </Provider>,

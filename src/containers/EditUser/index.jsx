@@ -81,6 +81,7 @@ class EditUser extends Component {
       <div className={style.user__edit}>
         <NavBar
           mode="light"
+          className={style.nav}
           onLeftClick={() => history.push('/main/me')}
           rightContent={
             (<div
