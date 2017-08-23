@@ -9,6 +9,7 @@ import Plan from '../../components/Plan';
 import News from '../../components/News';
 import Health from '../../components/Health';
 import Me from '../../components/Me';
+import EditUser from '../../containers/EditUser';
 
 import style from './index.scss';
 import home from './img/tab_home_nor@3x.png';
@@ -42,11 +43,13 @@ class Main extends Component {
     const { location, history } = this.props;
     const { tab } = this.state;
     if (!location.pathname.includes(tab)) {
-      const arr = location.pathname.split('/');
-      if (arr.length < 3) {
+      const arr = location.pathname.split('/main/');
+      if (arr.length < 2) {
+        // '/main'
         history.push('/main/home');
       } else {
-        this.changeTab(arr[2]);
+        // '/main/**/*'
+        this.changeTab(location.pathname.split('/main/')[1]);
       }
     }
   }
@@ -64,6 +67,17 @@ class Main extends Component {
   }
   render() {
     const { tab } = this.state;
+    const { location } = this.props;
+    const includePaths = ['/main/home', '/main/plan',
+      '/main/news', '/main/health', '/main/me'];
+    let isShow = false;
+    const length = includePaths.length;
+    for (let i = 0; i < length; i += 1) {
+      if (location.pathname === includePaths[i]) {
+        isShow = true;
+        break;
+      }
+    }
     return (
       <div className={style.main}>
         <div className={style.content}>
@@ -72,44 +86,49 @@ class Main extends Component {
           <Route path="/main/news" component={News} />
           <Route path="/main/health" component={Health} />
           <Route path="/main/me" component={Me} />
+          <Route path="/main/user/edit" component={EditUser} />
         </div>
-        <ul className={style.tab}>
-          <li onClick={() => this.changeTab('home')}>
-            <img
-              src={tab === 'home' ? homeSel : home}
-              alt="首页"
-            />
-            <p>首页</p>
-          </li>
-          <li onClick={() => this.changeTab('plan')}>
-            <img
-              src={tab === 'plan' ? planSel : plan}
-              alt="服药"
-            />
-            <p>服药</p>
-          </li>
-          <li onClick={() => this.changeTab('news')}>
-            <img
-              src={tab === 'news' ? newsSel : news}
-              alt="互动"
-            />
-            <p>互动</p>
-          </li>
-          <li onClick={() => this.changeTab('health')}>
-            <img
-              src={tab === 'health' ? healthSel : health}
-              alt="健康"
-            />
-            <p>健康</p>
-          </li>
-          <li onClick={() => this.changeTab('me')}>
-            <img
-              src={tab === 'me' ? meSel : me}
-              alt="我的"
-            />
-            <p>我的</p>
-          </li>
-        </ul>
+        {
+          isShow && (
+            <ul className={style.tab}>
+              <li onClick={() => this.changeTab('home')}>
+                <img
+                  src={tab === 'home' ? homeSel : home}
+                  alt="首页"
+                />
+                <p>首页</p>
+              </li>
+              <li onClick={() => this.changeTab('plan')}>
+                <img
+                  src={tab === 'plan' ? planSel : plan}
+                  alt="服药"
+                />
+                <p>服药</p>
+              </li>
+              <li onClick={() => this.changeTab('news')}>
+                <img
+                  src={tab === 'news' ? newsSel : news}
+                  alt="互动"
+                />
+                <p>互动</p>
+              </li>
+              <li onClick={() => this.changeTab('health')}>
+                <img
+                  src={tab === 'health' ? healthSel : health}
+                  alt="健康"
+                />
+                <p>健康</p>
+              </li>
+              <li onClick={() => this.changeTab('me')}>
+                <img
+                  src={tab === 'me' ? meSel : me}
+                  alt="我的"
+                />
+                <p>我的</p>
+              </li>
+            </ul>
+          )
+        }
       </div>
     );
   }

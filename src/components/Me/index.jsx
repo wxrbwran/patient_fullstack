@@ -35,10 +35,10 @@ class Me extends Component {
     return (
       <div className={style.me}>
         <div className={style.banner}>
-          <Link to="/user/edit">
+          <Link to="/main/user/edit">
             <img src={head} alt="头像" />
           </Link>
-          <Link to="/user/edit">
+          <Link to="/main/user/edit">
             <p className={style.name}>
               {name}<span>&gt;</span>
             </p>
