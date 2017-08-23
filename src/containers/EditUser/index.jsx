@@ -35,10 +35,7 @@ class EditUser extends Component {
     this.state = {
       files: [],
       birthday: null,
-      sex: null,
       area: null,
-      marriage: null,
-      education: null,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -62,13 +59,12 @@ class EditUser extends Component {
       if (error) {
         Toast.fail('请输入姓名!');
       } else {
-        const {  sex, birthday, area,
-          marriage, education } = this.state;
+        const {  birthday, area } = this.state;
         const data = Object.assign({}, value, {
           area,
-          education: !!education ?  education[0] : null,
-          marriage: !!marriage ? marriage[0] : null,
-          sex: !!sex ? sex[0] : null,
+          sex: value.sex[0],
+          marriage: value.marriage[0],
+          education: value.education[0],
           birthday: !!birthday ? +moment(birthday).format('x') : null,
         });
         console.log(data);
@@ -78,9 +74,9 @@ class EditUser extends Component {
   }
   render() {
     const { getFieldProps, getFieldError } = this.props.form;
-    const { history, name } = this.props;
-    const { files, sex, birthday,
-      marriage, education, area } = this.state;
+    const { history, name, sex,
+      marriage, education } = this.props;
+    const { files,  birthday, area } = this.state;
     return (
       <div className={style.user__edit}>
         <NavBar
@@ -127,13 +123,14 @@ class EditUser extends Component {
                 姓名
               </InputItem>
               <Picker
+                {...getFieldProps('sex', {
+                  initialValue: [sex],
+                })}
                 data={[
                   { value: 0, label: '女' },
                   { value: 1, label: '男' },
                 ]}
                 cols={1}
-                value={!!sex ? sex : [this.props.sex]}
-                onChange={val => this.setState({ sex: val })}
               >
                 <Item
                   arrow="horizontal"
@@ -167,13 +164,14 @@ class EditUser extends Component {
                 <Item arrow="horizontal">选择地区</Item>
               </Picker>
               <Picker
+                {...getFieldProps('marriage', {
+                  initialValue: [marriage],
+                })}
                 data={[
                   { value: 0, label: '未婚' },
                   { value: 1, label: '已婚' },
                 ]}
                 cols={1}
-                value={!!marriage ? marriage : [this.props.marriage]}
-                onChange={val => this.setState({ marriage: val })}
               >
                 <Item
                   arrow="horizontal"
@@ -182,6 +180,9 @@ class EditUser extends Component {
                 </Item>
               </Picker>
               <Picker
+                {...getFieldProps('education', {
+                  initialValue: [education],
+                })}
                 data={[
                   { value: 1, label: '初中以下' },
                   { value: 2, label: '高中' },
@@ -190,8 +191,6 @@ class EditUser extends Component {
                   { value: 5, label: '研究生及以上' },
                 ]}
                 cols={1}
-                value={!!education ? education : [this.props.education]}
-                onChange={val => this.setState({ education: val })}
               >
                 <Item
                   arrow="horizontal"
