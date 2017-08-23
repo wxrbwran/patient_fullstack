@@ -9,5 +9,4 @@ export function fetchUserApi() {
 
 export function editUserApi(params) {
   return api.patch('user', params);
-
 }

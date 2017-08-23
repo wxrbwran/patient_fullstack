@@ -16,6 +16,7 @@ import style from './index.scss';
 class Home extends Component {
   static propTypes = {
     name: PropTypes.string,
+    actions: PropTypes.object,
   };
   constructor(props) {
     super(props);
