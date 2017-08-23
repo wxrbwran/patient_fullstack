@@ -9,7 +9,7 @@ import { WhiteSpace, InputItem,
 import { createForm } from 'rc-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../../redux/actions/login';
+import * as actions from '../../redux/actions/auth';
 import style from './index.scss';
 import logo from './img/login_logo@3x.png';
 
@@ -32,6 +32,7 @@ class Login extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (nextProps.isSuccess && nextProps.isAuthenticated) {
       Toast.success('登录成功!', 0.75);
       const { history } = this.props;
@@ -116,10 +117,10 @@ class Login extends Component {
 
 export default connect(
   state => ({
-    isSuccess: state.login.isSuccess,
-    isFail: state.login.isFail,
-    isAuthenticated: state.login.isAuthenticated,
-    message: state.login.message,
+    isSuccess: state.auth.isSuccess,
+    isFail: state.auth.isFail,
+    isAuthenticated: state.auth.isAuthenticated,
+    message: state.auth.message,
   }),
   dispatch => ({
     actions: bindActionCreators(actions, dispatch),

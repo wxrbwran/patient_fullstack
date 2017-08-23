@@ -2,7 +2,7 @@
  * Created by wuxiaoran on 2017/8/1.
  */
 import { put, call, takeLatest } from 'redux-saga/effects';
-import history from 'history/createHashHistory';
+// import history from 'history/createHashHistory';
 import loginApi from '../../apis/login';
 import { api, authApi, setAuthorizationToken } from '../../utils/api';
 
@@ -105,8 +105,7 @@ function logout() {
   localStorage.removeItem('refresh_token');
   setAuthorizationToken(false);
   unprotectApi();
-  // yield put({ type: 'LOGOUT_REQUEST' });
-  history().push('/login');
+  // history().push('/login');
 }
 
 export function* watchLogin() {

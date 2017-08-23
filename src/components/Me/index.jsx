@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as logActions from '../../redux/actions/login';
+import * as logActions from '../../redux/actions/auth';
 // import { api } from '../../utils/api';
 import style from './index.scss';
 import head from '../../assets/img/default_head@3x.png';
@@ -29,13 +29,6 @@ class Me extends Component {
     this.state = {
     };
   }
-  // componentDidMount() {
-  //   api.get('user/info')
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch(err => console.log(err));
-  // }
   render() {
     const { name, BMI } = this.props;
     return (
@@ -81,7 +74,9 @@ class Me extends Component {
             </div>
             <div
               className={style.action_item}
-              onClick={this.props.logActions.logout}
+              onClick={() => {
+                this.props.logActions.logout();
+              }}
             >
               <img src={setting} alt="设置" />
               <h3>设置</h3>

@@ -3,7 +3,7 @@
  */
 import {
   LOGIN_REQUEST, LOGOUT_REQUEST,
-} from '../constants/login';
+} from '../constants/auth';
 
 export function login(params) {
   return {

@@ -2,7 +2,6 @@
  * Created by wuxiaoran on 2017/8/10.
  */
 import React, { Component } from 'react';
-// import { Icon } from 'antd-mobile';
 import { PropTypes } from 'prop-types';
 import { Route } from 'react-router-dom';
 import Home from '../../components/Home';
@@ -32,8 +31,6 @@ class Main extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    // actions: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.bool,
   };
   constructor(props) {
     super(props);
@@ -42,25 +39,16 @@ class Main extends Component {
     };
   }
   componentWillMount() {
-    const { location, history,
-      isAuthenticated } = this.props;
-    console.log(isAuthenticated);
-    if (isAuthenticated) {
-      const { tab } = this.state;
-      if (!location.pathname.includes(tab)) {
-        const arr = location.pathname.split('/');
-        if (arr.length < 3) {
-          history.push('/main/home');
-        } else {
-          this.changeTab(arr[2]);
-        }
+    const { location, history } = this.props;
+    const { tab } = this.state;
+    if (!location.pathname.includes(tab)) {
+      const arr = location.pathname.split('/');
+      if (arr.length < 3) {
+        history.push('/main/home');
+      } else {
+        this.changeTab(arr[2]);
       }
-    } else {
-      history.push('/login');
     }
-  }
-  componentDidMount() {
-    // this.props.actions.init();
   }
   changeTab = (tab) => {
     const { history, location } = this.props;

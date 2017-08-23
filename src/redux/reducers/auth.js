@@ -4,7 +4,7 @@
 
 import { LOGIN_SUCCESS,
   LOGIN_FAIL, LOGOUT_REQUEST,
-  LOGIN_REQUEST } from '../constants/login';
+  LOGIN_REQUEST } from '../constants/auth';
 
 const initialState = {
   isAuthenticated: false,

@@ -13,7 +13,11 @@ export default (Comp) => {
     };
     componentWillMount() {
       if (!this.props.isAuthenticated) {
-        console.log(this.props.isAuthenticated);
+        this.props.history.push('/login');
+      }
+    }
+    componentWillUpdate(nextProps) {
+      if (!nextProps.isAuthenticated) {
         this.props.history.push('/login');
       }
     }
@@ -23,7 +27,7 @@ export default (Comp) => {
   }
   return connect(
     state => ({
-      isAuthenticated: state.login.isAuthenticated,
+      isAuthenticated: state.auth.isAuthenticated,
     }),
     null,
   )(Auth);
