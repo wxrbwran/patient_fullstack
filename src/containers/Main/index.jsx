@@ -50,6 +50,9 @@ class Main extends Component {
       }
     }
   }
+  componentDidMount() {
+    // this.props.actions.init();
+  }
   changeTab = (tab) => {
     const { history, location } = this.props;
     this.setState({
@@ -113,3 +116,4 @@ class Main extends Component {
 }
 
 export default Main;
+

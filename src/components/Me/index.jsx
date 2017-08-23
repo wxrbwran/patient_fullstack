@@ -18,6 +18,7 @@ import medicine from './img/me_icon_medicine@3x.png';
 import relatives from './img/me_icon_relatives@3x.png';
 import setting from './img/me_icon_set@3x.png';
 
+
 class Me extends Component {
   static propTypes = {
     logActions: PropTypes.object,
@@ -98,17 +99,3 @@ export default connect(
   }),
 )(Me);
 
-/*
-* <Button
- type="ghost"
- inline
- size="small"
- onClick={this.props.logActions.logout}
- style={{
- marginRight: '0 auto',
- color: '#fff',
- }}
- >
- 退出登录
- </Button>
-* */

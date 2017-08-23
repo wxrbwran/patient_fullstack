@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Icon } from 'antd-mobile';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-// import * as actions from '../../redux/actions/user';
 import RecentPlan from '../RecentPlan';
 import head from '../../assets/img/default_head@3x.png';
 import plan from './img/plan.png';
@@ -23,6 +21,9 @@ class Home extends Component {
     super(props);
     this.state = {
     };
+  }
+  componentDidMount() {
+    this.props.actions.fetchUser();
   }
   render() {
     const { name } = this.props;

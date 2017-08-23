@@ -8,6 +8,7 @@ import { FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_FAIL,
   EDIT_USER, EDITING, EDIT_USER_SUCCESS, EDIT_USER_FAIL,
   } from '../constants/user';
 
+
 function* userRequest() {
   try {
     const res = yield call(fetchUserApi);
@@ -36,3 +37,4 @@ function* userEdit(action) {
 export function* watchUserEdit() {
   yield takeLatest(EDIT_USER, userEdit);
 }
+

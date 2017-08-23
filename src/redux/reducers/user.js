@@ -1,9 +1,15 @@
 /**
  * Created by wuxiaoran on 2017/8/16.
  */
+<<<<<<< HEAD
 import { FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_FAIL,
   EDIT_USER, EDITING, EDIT_USER_SUCCESS, EDIT_USER_FAIL,
   } from '../constants/user';
+=======
+import { FETCH_USER,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_FAIL } from '../constants/user';
+>>>>>>> 3b40f4c6903eb40409ac7b440d8fcfbc115a42c8
 
 const initialState = {
   name: null,
@@ -14,7 +20,10 @@ const initialState = {
   sex: null,
   status: null,
   tel: null,
+<<<<<<< HEAD
   BMI: null,
+=======
+>>>>>>> 3b40f4c6903eb40409ac7b440d8fcfbc115a42c8
   type: null,
   height: null,
   weight: null,
