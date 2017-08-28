@@ -51,7 +51,17 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: {
+    app: [require.resolve('./polyfills'), paths.appIndexJs],
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'redux',
+      'react-router-dom',
+      'axios',
+    ],
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -327,6 +337,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'static/js/vendor.[hash:8].js',
+      minChunks: Infinity,
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

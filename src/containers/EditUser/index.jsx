@@ -67,7 +67,6 @@ class EditUser extends Component {
           education: value.education[0],
           birthday: !!birthday ? +moment(birthday).format('x') : null,
         });
-        console.log(data);
         this.props.actions.editUser(data);
       }
     });
