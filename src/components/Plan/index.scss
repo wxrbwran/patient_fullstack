@@ -1,0 +1,21 @@
+.plan{
+  :global{
+    .am-navbar-left-icon{
+      display: none;
+    }
+  }
+  &__img{
+    @include size(45px);
+  }
+  &__content{
+
+  }
+  &__lists,
+  &__plans{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    background-color: #fff;
+  }
+}
