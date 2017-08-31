@@ -1,0 +1,50 @@
+.title{
+  height: 90px;
+  line-height: 90px;
+  color: #fff;
+  background-color: $theme-color;
+  border-radius: 6px 6px 0 0;
+  @include flex-lay(row, nowrap, space-between, center);
+  span:first-of-type{
+    display: inline-block;
+    font-size: 40px;
+    text-indent: 20px;
+    margin-right: 28px;
+  }
+  span:last-of-type{
+    font-size: 32px;
+  }
+  :global{
+    .am-button{
+      @include lh(56px);
+      width: 126px;
+      margin-right: 20px;
+      font-size: 24px;
+      padding: 0;
+      color: #fff;
+      background-color: $theme-color;
+    }
+  }
+}
+.medicine__list{
+  border-radius: 0 0 6px 6px;
+  li{
+    height: 120px;
+    line-height: 120px;
+    overflow: hidden;
+    padding: 0 20px;
+    font-size: 32px;
+    color: $main-text-color;
+    border-bottom: 2px solid $borderColor;
+    &:last-of-type{
+      border-bottom: none;
+    }
+    span{
+      display: inline-block;
+      float: left;
+    }
+    span:last-of-type{
+      float: right;
+    }
+  }
+}

@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 // import { PropTypes } from 'prop-types';
+import style from './index.scss';
 
 class Health extends Component {
   static propTypes = {
@@ -14,7 +15,9 @@ class Health extends Component {
   }
   render() {
     return (
-      <div>建设中</div>
+      <div className={style.health}>
+        1
+      </div>
     );
   }
 }
