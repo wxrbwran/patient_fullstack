@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { NavBar, Tabs } from 'antd-mobile';
 // import { PropTypes } from 'prop-types';
+import RecentPlan from '../RecentPlan';
 import style from './index.scss';
 
 const TabPane = Tabs.TabPane;
@@ -39,14 +40,14 @@ class Plan extends Component {
         </NavBar>
         <div className={style.plan__content}>
           <Tabs defaultActiveKey="1" animated >
-            <TabPane tab="服药单" key="1">
+            <TabPane tab="服药计划" key="1">
               <div
                 className={style.plan__lists}
               >
-                Content of First Tab
+                <RecentPlan />
               </div>
             </TabPane>
-            <TabPane tab="服药计划" key="2">
+            <TabPane tab="服药单" key="2">
               <div
                 className={style.plan__plans}
               >
