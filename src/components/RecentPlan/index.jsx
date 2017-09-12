@@ -17,6 +17,7 @@ class RecentPlan extends Component {
     return (
       <ul className={style.plan}>
         <PlanItem />
+        <PlanItem showEdit />
       </ul>
     );
   }
