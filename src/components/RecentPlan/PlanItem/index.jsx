@@ -2,9 +2,16 @@
  * Created by wuxiaoran on 2017/8/31.
  */
 import React, { Component } from 'react';
-import { Button } from 'antd-mobile';
+import { Button, List, Checkbox } from 'antd-mobile';
 import { PropTypes } from 'prop-types';
 import style from './index.scss';
+
+const CheckboxItem = Checkbox.CheckboxItem;
+const data = [
+  { value: 0, label: 'Ph.D.' },
+  { value: 1, label: 'Bachelor' },
+  { value: 2, label: 'college diploma' },
+];
 
 class PlanItem extends Component {
   static propTypes = {
@@ -18,6 +25,9 @@ class PlanItem extends Component {
     this.state = {
       isEdit: false,
     };
+  }
+  onChange = (val) => {
+    console.log(val);
   }
   toggleEdit = () => {
     this.setState({
@@ -49,9 +59,16 @@ class PlanItem extends Component {
           ) }
         </div>
         { isEdit ? (
-          <ul>
-            <li>11</li>
-          </ul>
+          <List>
+            {data.map(i => (
+              <CheckboxItem
+                key={i.value}
+                onChange={() => this.onChange(i.value)}
+              >
+                {i.label}
+              </CheckboxItem>
+            ))}
+          </List>
         ) : (
           <ul className={style.medicine__list}>
             <li>
