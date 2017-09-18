@@ -48,3 +48,20 @@
     }
   }
 }
+.action{
+  @include flex-lay(row, nowrap, flex-start, center);
+  height: 100px;
+  span {
+    flex: 1 1 50%;
+    height: 100px;
+    line-height: 100px;
+    display: inline-block;
+    text-align: center;
+    font-size: 32px;
+    color: #2bb2ba;
+    width: 50%;
+    &:first-of-type{
+      color: #db7831;
+    }
+  }
+}

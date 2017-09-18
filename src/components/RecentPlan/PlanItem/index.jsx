@@ -24,10 +24,25 @@ class PlanItem extends Component {
     super(props);
     this.state = {
       isEdit: false,
+      values: [],
     };
   }
   onChange = (val) => {
-    console.log(val);
+    const { values } = this.state;
+    let checks = [];
+    if (values.includes(val)) {
+      console.log(val);
+      const set = new Set(values);
+      set.delete(val);
+      checks = [...set];
+      this.setState({
+        values: checks,
+      });
+    } else {
+      this.setState({
+        values: [...values, val],
+      });
+    }
   }
   toggleEdit = () => {
     this.setState({
@@ -36,7 +51,7 @@ class PlanItem extends Component {
   }
   render() {
     const { showEdit } = this.props;
-    const { isEdit } = this.state;
+    const { isEdit, values } = this.state;
     return (
       <li>
         <div className={style.title}>
@@ -59,16 +74,30 @@ class PlanItem extends Component {
           ) }
         </div>
         { isEdit ? (
-          <List>
-            {data.map(i => (
-              <CheckboxItem
-                key={i.value}
-                onChange={() => this.onChange(i.value)}
-              >
-                {i.label}
-              </CheckboxItem>
-            ))}
-          </List>
+          <div>
+            <List>
+              {data.map(i => (
+                <CheckboxItem
+                  key={i.value}
+                  checked={this.state.values.includes(i.value)}
+                  onChange={() => this.onChange(i.value)}
+                >
+                  {i.label}
+                </CheckboxItem>
+              ))}
+            </List>
+            { values.length > 0 ? (
+              <div className={style.action}>
+                <span>已吃</span>
+              </div>
+            ) : (
+              <div className={style.action}>
+                <span>全部已吃</span>
+                <span>全部未吃</span>
+              </div>
+            ) }
+          </div>
+
         ) : (
           <ul className={style.medicine__list}>
             <li>
