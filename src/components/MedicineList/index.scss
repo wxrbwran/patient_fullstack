@@ -1,13 +1,52 @@
-.head,.content{
-  height: 120px;
+.head, .content{
   color: #999;
-  li {
+  height: auto;
+  line-height: 120px;
+  @include flex-lay(row, nowrap, flex-start, flex-start);
+  border-bottom: 2px solid $borderColor;
+  .name, .dosage, .time {
+    font-size: 32px;
+    color: #999;
     display: inline-block;
   }
   .name{
-    font-size: 32px;
+    flex: 1 1 74px;
+    margin-right: 16px;
+  }
+  .dosage{
+    flex: 1 1 100px;
+    margin-right: 16px;
+  }
+  .time {
+    flex: 1 1 150px;
   }
 }
-.content{
 
+.content{
+  .name, .dosage {
+    color: #666;
+  }
+  > ul{
+    flex: 2 1 246px;
+  }
+  .inner_content{
+    display: flex;
+  }
+  .time {
+    font-size: 26px;
+    max-height: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    span {
+      display: inline-block;
+      width: 80px;
+      height: 40px;
+      line-height: 40px;
+      margin-right: 2px;
+      text-align: center;
+      border: 1px solid #999;
+      border-radius: 40px;
+    }
+  }
 }

@@ -17,15 +17,67 @@ class MedicineList extends Component {
   render() {
     return (
       <div>
-        <ul className={style.head}>
-          <li className={style.name}>药名</li>
-          <li className={style.dosage}>剂量</li>
-          <li className={style.time}>时间</li>
-        </ul>
-        <ul className={style.content}>
-          <li className={style.name}>药名</li>
-          <li className={style.dosage}>剂量</li>
-          <li className={style.time}>时间</li>
+        <div className={style.head}>
+          <div className={style.name}>药名</div>
+          <div className={style.dosage}>剂量</div>
+          <div className={style.time}>时间</div>
+        </div>
+        <ul>
+          <li className={style.content}>
+            <div className={style.name}>阿司匹林</div>
+            <ul>
+              <li className={style.inner_content}>
+                <div className={style.dosage}>
+                  200mg x 3
+                </div>
+                <div className={style.time}>
+                  <span>
+                    16:00
+                  </span>
+                  <span>
+                   17:00
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li className={style.content}>
+            <div className={style.name}>阿司匹林</div>
+            <ul>
+              <li className={style.inner_content}>
+                <div className={style.dosage}>
+                  200mg x 3
+                </div>
+                <div className={style.time}>
+                  <span>
+                    16:00
+                  </span>
+                  <span>
+                   17:00
+                  </span>
+                </div>
+              </li>
+              <li className={style.inner_content}>
+                <div className={style.dosage}>
+                  200mg x 3
+                </div>
+                <div className={style.time}>
+                  <span>
+                    16:00
+                  </span>
+                  <span>
+                   17:00
+                  </span>
+                  <span>
+                   18:00
+                  </span>
+                  <span>
+                   18:00
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
     );

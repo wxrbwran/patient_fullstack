@@ -16,26 +16,25 @@ router.get('/info',
         return res.json({
           status: 'fail',
           message: `数据库错误, ${err.stack}`,
-        })
-      } else {
-        return res.json({
-          status: 'success',
-          data: {
-            name: user.name,
-            weight: user.weight,
-            height: user.height,
-            waistline: user.waistline,
-            tel: user.tel,
-            sex: user.sex,
-            BMI: user.BMI,
-            marriage: user.marriage,
-            education: user.education,
-            birthday: user.birthday,
-            area: user.area,
-            bindingDoctor: user.bindingDoctor,
-          },
-        })
+        });
       }
+      return res.json({
+        status: 'success',
+        data: {
+          name: user.name || `用户${user.tel}`,
+          weight: user.weight,
+          height: user.height,
+          waistline: user.waistline,
+          tel: user.tel,
+          sex: user.sex,
+          BMI: user.BMI,
+          marriage: user.marriage,
+          education: user.education,
+          birthday: user.birthday,
+          area: user.area,
+          bindingDoctor: user.bindingDoctor,
+        },
+      });
     });
   });
 
