@@ -1,0 +1,45 @@
+.news{
+  :global{
+    .am-navbar-left-icon{
+      display: none;
+    }
+  }
+}
+.content{
+  padding: 0 24px;
+  background-color: #fff;
+}
+
+.doctor, .assistant{
+  padding: 40px;
+  height: 100px;
+  border-bottom: 2px solid $borderColor;
+  @include flex-lay(row, nowrap, flex-start, center);
+  img{
+    @include size(100px);
+    margin-right: 40px;
+  }
+  > div {
+    height: 100px;
+    width: 100%;
+    position: relative;
+    h3{
+      font-size: 32px;
+      color: $main-text-color;
+      margin-bottom: 8px;
+      @include lh(46px);
+    }
+    p{
+      font-size: 32px;
+      color: $help-text-color;
+      @include lh(46px);
+    }
+    span{
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 28px;
+      color: $extra-text-color;
+    }
+  }
+}

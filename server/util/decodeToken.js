@@ -5,7 +5,9 @@ const jsonwebtoken  = require('jsonwebtoken');
 const config = require('../config');
 
 export function decodeToken(token) {
+  console.log('received:', token);
   const decode = jsonwebtoken.verify(token.split(' ')[1],
     config.token.secret);
+  console.log('decoded:', decode);
   return decode;
 }

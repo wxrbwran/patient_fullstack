@@ -166,8 +166,9 @@ router.post('/login', function (req, res) {
   }
   else if (grant_type === 'refresh_token') {
     const refresh_token = req.body.refresh_token;
+    console.log(refresh_token);
     const { uid, exp } = decodeToken(refresh_token);
-    console.log(exp, Date.now());
+    console.log(uid, exp, Date.now());
     if (exp * 1000 > Date.now()) {
       User.findById(uid, function (err, user) {
         console.log(err, user);
@@ -181,13 +182,13 @@ router.post('/login', function (req, res) {
             uid: user['_id'],
             tel: user['tel'],
           }, config.token.secret, {
-            expiresIn: config.token.expired
+            expiresIn: config.token.expired,
           });
           const refresh_token = jsonwebtoken.sign({
             uid: user['_id'],
             tel: user['tel'],
           }, config.token.secret, {
-            expiresIn: config.token.refresh
+            expiresIn: config.token.refresh,
           });
           res.json({
             status: 'success',
