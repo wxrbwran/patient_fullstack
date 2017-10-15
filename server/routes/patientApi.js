@@ -134,7 +134,7 @@ router.post('/login', function (req, res) {
               uid: user[0]['_id'],
               tel: user[0]['tel'],
             }, config.token.secret, {
-              expiresIn: config.token.refresh
+              expiresIn: config.token.refresh,
             });
             res.json({
               status: 'success',

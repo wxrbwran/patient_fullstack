@@ -9,7 +9,7 @@ const User = require('../models/user');
 router.get('/info',
   jwt({secret: config.token.secret}),
   function (req, res) {
-    const token = req.headers['authorization'];
+    const token = req.headers['authorization'].split(' ')[1];
     const { uid } = decodeToken(token);
     User.findById(uid, function (err, user) {
       if (err) {
@@ -41,7 +41,7 @@ router.get('/info',
 router.patch('/',
   jwt({secret: config.token.secret}),
   function (req, res) {
-    const token = req.headers['authorization'];
+    const token = req.headers['authorization'].split(' ')[1];
     const { uid } = decodeToken(token);
     User.findById(uid, function (err, user) {
       if (err) {
@@ -49,23 +49,20 @@ router.patch('/',
           status: 'fail',
           message: `数据库错误, ${err.stack}`,
         })
-      }  else if (user) {
-        console.log(user);
-        User.update({_id: uid}, {$set: {...req.body}},
-          function (err, resp) {
-          if (err) {
-            res.json({
-              status: 'fail',
-              message: `数据库错误, ${err.stack}`,
-            })
-          } else {
-            res.json({
-              status: 'success',
-              data: resp,
-            })
-          }
-        });
       }
+      User.update({_id: uid}, {$set: {...req.body}},
+        function (err, resp) {
+        if (err) {
+          return res.json({
+            status: 'fail',
+            message: `数据库错误, ${err.stack}`,
+          });
+        }
+          return res.json({
+            status: 'success',
+            data: resp,
+          });
+      });
     });
   });
 

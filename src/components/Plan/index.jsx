@@ -40,19 +40,19 @@ class Plan extends Component {
           服药
         </NavBar>
         <div className={style.plan__content}>
-          <Tabs defaultActiveKey="2" animated >
-            <TabPane tab="服药计划" key="1">
-              <div
-                className={style.plan__lists}
-              >
-                <RecentPlan />
-              </div>
-            </TabPane>
-            <TabPane tab="服药单" key="2">
+          <Tabs defaultActiveKey="1" animated >
+            <TabPane tab="服药单" key="1">
               <div
                 className={style.plan__plans}
               >
                 <MedicineList />
+              </div>
+            </TabPane>
+            <TabPane tab="服药计划" key="2">
+              <div
+                className={style.plan__lists}
+              >
+                <RecentPlan />
               </div>
             </TabPane>
           </Tabs>
