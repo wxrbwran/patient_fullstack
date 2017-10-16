@@ -10,6 +10,8 @@ import News from '../../components/News';
 import Health from '../../components/Health';
 import Me from '../../components/Me';
 import EditUser from '../../containers/EditUser';
+import EditMedicinePlan from '../../containers/EditMedicinePlan';
+
 
 import style from './index.scss';
 import home from './img/tab_home_nor@3x.png';
@@ -33,10 +35,18 @@ class Main extends Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   };
+  static childContextTypes = {
+    changeTab: PropTypes.func,
+  };
   constructor(props) {
     super(props);
     this.state = {
       tab: 'home',
+    };
+  }
+  getChildContext() {
+    return {
+      changeTab: this.changeTab,
     };
   }
   componentWillMount() {
@@ -65,25 +75,20 @@ class Main extends Component {
   render() {
     const { tab } = this.state;
     const { location } = this.props;
-    const includePaths = ['/main/home', '/main/plan',
+    const mainPaths = ['/main/home', '/main/plan',
       '/main/news', '/main/health', '/main/me'];
-    let isShow = false;
-    const length = includePaths.length;
-    for (let i = 0; i < length; i += 1) {
-      if (location.pathname === includePaths[i]) {
-        isShow = true;
-        break;
-      }
-    }
+    const isShow = mainPaths.includes(location.pathname);
+
     return (
       <div className={style.main}>
         <div className={style.content}>
           <Route path="/main/home" component={Home} />
-          <Route path="/main/plan" component={Plan} />
+          <Route path="/main/plan" component={Plan} exact />
           <Route path="/main/news" component={News} />
           <Route path="/main/health" component={Health} />
           <Route path="/main/me" component={Me} />
           <Route path="/main/user/edit" component={EditUser} />
+          <Route path="/main/plan/edit" component={EditMedicinePlan} />
         </div>
         {
           isShow && (

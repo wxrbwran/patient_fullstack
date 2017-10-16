@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import { NavBar, Tabs } from 'antd-mobile';
+import { Link } from 'react-router-dom';
 // import { PropTypes } from 'prop-types';
 import RecentPlan from '../RecentPlan';
 import MedicineList from '../MedicineList';
@@ -31,11 +32,15 @@ class Plan extends Component {
               alt="用药历史"
             />)}
           rightContent={
-            (<img
-              className={style.plan__img}
-              src={require('./img/common_add@3x.png')}
-              alt="新增用药"
-            />)}
+            (<Link
+              to="/main/plan/edit"
+            >
+              <img
+                className={style.plan__img}
+                src={require('./img/common_add@3x.png')}
+                alt="新增用药"
+              />
+            </Link>)}
         >
           服药
         </NavBar>

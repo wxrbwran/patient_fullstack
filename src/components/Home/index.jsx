@@ -3,7 +3,8 @@
  */
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Icon } from 'antd-mobile';
+// import { Link } from 'react-router-dom';
+import { Icon, Modal } from 'antd-mobile';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 // import * as actions from '../../redux/actions/user';
@@ -19,13 +20,23 @@ class Home extends Component {
   static propTypes = {
     name: PropTypes.string,
   };
+  static contextTypes = {
+    changeTab: PropTypes.func.isRequired,
+  };
   constructor(props) {
     super(props);
     this.state = {
+      isShowModal: false,
     };
+  }
+  toggleModal = () => {
+    this.setState({
+      isShowModal: !this.state.isShowModal,
+    });
   }
   render() {
     const { name } = this.props;
+    const { changeTab } = this.context;
     return (
       <div className={style.home}>
         <div className={style.info}>
@@ -37,7 +48,9 @@ class Home extends Component {
               服药达标率
               <span>50.1%</span>
               <Icon type="right" />
-              <span>i</span>
+              <span
+                onClick={this.toggleModal}
+              >i</span>
             </p>
             <div />
           </div>
@@ -45,9 +58,14 @@ class Home extends Component {
         </div>
         <div className={style.actions}>
           <ol>
-            <li className={style.action}>
+            <li
+              className={style.action}
+              onClick={() => changeTab('plan')}
+            >
               <img src={plan} alt="" />
-              <p>目前用药</p>
+              <p>
+                目前用药
+              </p>
             </li>
             <li className={style.action}>
               <img src={ask} alt="" />
@@ -82,6 +100,18 @@ class Home extends Component {
         <div className={style.latest}>
           <RecentPlan />
         </div>
+        <Modal
+          title="服药计算公式"
+          transparent
+          closable
+          maskClosable={false}
+          visible={this.state.isShowModal}
+          onClose={this.toggleModal}
+        >
+          <p>合格次数/总次数</p>
+          <p>= 0 /27</p>
+          <p>= 0 %</p>
+        </Modal>
       </div>
     );
   }

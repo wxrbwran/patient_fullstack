@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 // import { PropTypes } from 'prop-types';
+import MedicineItem from './MedicineItem';
 import style from './index.scss';
 
 class MedicineList extends Component {
@@ -23,61 +24,7 @@ class MedicineList extends Component {
           <div className={style.time}>时间</div>
         </div>
         <ul>
-          <li className={style.content}>
-            <div className={style.name}>阿司匹林</div>
-            <ul>
-              <li className={style.inner_content}>
-                <div className={style.dosage}>
-                  200mg x 3
-                </div>
-                <div className={style.time}>
-                  <span>
-                    16:00
-                  </span>
-                  <span>
-                   17:00
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li className={style.content}>
-            <div className={style.name}>阿司匹林</div>
-            <ul>
-              <li className={style.inner_content}>
-                <div className={style.dosage}>
-                  200mg x 3
-                </div>
-                <div className={style.time}>
-                  <span>
-                    16:00
-                  </span>
-                  <span>
-                   17:00
-                  </span>
-                </div>
-              </li>
-              <li className={style.inner_content}>
-                <div className={style.dosage}>
-                  200mg x 3
-                </div>
-                <div className={style.time}>
-                  <span>
-                    16:00
-                  </span>
-                  <span>
-                   17:00
-                  </span>
-                  <span>
-                   18:00
-                  </span>
-                  <span>
-                   18:00
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
+          <MedicineItem />
         </ul>
       </div>
     );
