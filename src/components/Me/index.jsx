@@ -22,7 +22,7 @@ class Me extends Component {
   static propTypes = {
     logActions: PropTypes.object,
     name: PropTypes.string,
-    BMI: PropTypes.string,
+    BMI: PropTypes.number,
   };
   constructor(props) {
     super(props);

@@ -124,16 +124,16 @@ router.post('/login', function (req, res) {
         .digest('hex')})
         .then(user => {
           if (user.length === 1) {
-            const token = jsonwebtoken.sign({
+            const tokenData = {
               uid: user[0]['_id'],
               tel: user[0]['tel'],
-            }, config.token.secret, {
+            };
+            const token = jsonwebtoken.sign(tokenData,
+              config.token.secret, {
               expiresIn: config.token.expired
             });
-            const refresh_token = jsonwebtoken.sign({
-              uid: user[0]['_id'],
-              tel: user[0]['tel'],
-            }, config.token.secret, {
+            const refresh_token = jsonwebtoken.sign(tokenData,
+              config.token.secret, {
               expiresIn: config.token.refresh,
             });
             res.json({
