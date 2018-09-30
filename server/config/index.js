@@ -11,7 +11,7 @@ module.exports = {
   token: {
     secret: 'patient',
     expired: '1h',
-    refresh: '2h'
+    refresh: '1h'
   },
   password: {
     salt: 'patient',

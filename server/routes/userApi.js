@@ -1,10 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const jwt = require('express-jwt');
 const config = require('../config');
 const { decodeToken } = require('../util/decodeToken');
 const User = require('../models/user');
+const crypto = require('crypto');
 
+const router = express.Router();
 
 router.get('/info',
   jwt({secret: config.token.secret}),
